@@ -30,16 +30,6 @@ public class IndexController {
         ClassPathResource resource = new ClassPathResource("static/index.html");
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
     }
-    /*@GetMapping("/")
-    public String index() {
-        return "/";
-    }*/
-
-    /*@GetMapping("/")
-    public String sayHello(Model model) {
-        model.addAttribute("name", "World");
-        return "/";
-    }*/
 
     @PostMapping("/")
     public String receiveData(@RequestBody DataModel data) {

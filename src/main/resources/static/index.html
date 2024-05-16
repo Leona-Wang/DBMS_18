@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登入</title>
-    
+    <script src="static/indexControll.js"></script>
 </head>
 <body>
     <h1>Submit Your Data</h1>
@@ -12,19 +12,7 @@
         <input type="text" id="inputData" placeholder="Enter some data here">
         <button type="button" onclick="submitData()">Submit</button>
     </form>
-    <script>
-        function submitData() {
-            var data = document.getElementById('inputData').value;
-            fetch('/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ data: data })
-            }).then(response => response.text())
-              .then(message => alert("Server says: " + message));
-        }
-    </script>
+
 
 </body>
 </html>
