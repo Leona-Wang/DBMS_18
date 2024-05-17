@@ -1,6 +1,6 @@
-console.log('register page loaded');
 
-function submit() {
+
+function submitForm() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
@@ -8,7 +8,7 @@ function submit() {
     data.append('username', username);
     data.append('password', password);
 
-    fetch('/', {
+    fetch('/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -16,9 +16,10 @@ function submit() {
         body: data
     }).then(response => response.text())
       .then(message => alert("Server says: " + message));
+
+      
 }
 
 function toIndex() {
-    win
     dow.location.href = 'http://localhost:8080/';
 }

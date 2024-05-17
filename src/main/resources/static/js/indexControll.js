@@ -1,4 +1,3 @@
-console.log('Main page loaded');
 
 function submitForm() {
     var username = document.getElementById("username").value;

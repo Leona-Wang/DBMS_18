@@ -28,17 +28,12 @@ import com.mysql.cj.x.protobuf.MysqlxCrud.DataModel;
 @RestController
 public class IndexController {
     
-    @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("message", "Hello, Spring MVC!");
-        return "index";
-    }
-
-    /*@GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
+    
+    @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
         ClassPathResource resource = new ClassPathResource("static/index.html");
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
-    }*/
+    }
 
     @PostMapping("/")
     @ResponseBody
@@ -51,22 +46,7 @@ public class IndexController {
         return "Received form data: " + userData;
     }
 
-    /*@PostMapping("/")
-    public String receiveData(@RequestBody DataModel data) {
-        System.out.println("Received data: " + data.getData());
-        return "Received: " + data.getData();
-    }
-
-    static class DataModel {
-        private String data;
-
-        public String getData() {
-            return data;
-        }
-
-        public void setData(String data) {
-            this.data = data;
-        }*/
+    
     }
 
 

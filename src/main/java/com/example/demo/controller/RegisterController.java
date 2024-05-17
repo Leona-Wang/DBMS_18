@@ -16,22 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RegisterController {
- 
-    @GetMapping("/register")
-    public String home(Model model) {
-        model.addAttribute("message", "Hello, Spring MVC!");
-        return "register"; // 這裡返回的是視圖的名稱
-    }
 
-    /*@GetMapping(value = "/register", produces = MediaType.TEXT_HTML_VALUE)
+
+    @GetMapping(value = "/register", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
         ClassPathResource resource = new ClassPathResource("static/register.html");
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
         
-    } */ 
+    }  
 
-    @ResponseBody
     @PostMapping("/register")
+    @ResponseBody
     public String handleFormSubmission(@RequestParam("username") String username, @RequestParam("password") String password) {
         // 处理从表单中获取到的数据
         String userData = "註冊Username: " + username + ", Password: " + password;
