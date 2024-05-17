@@ -15,3 +15,7 @@ function submitForm() {
     }).then(response => response.text())
       .then(message => alert("Server says: " + message));
 }
+
+function toRegister() {
+    window.location.href = 'http://localhost:8080/register';
+}
