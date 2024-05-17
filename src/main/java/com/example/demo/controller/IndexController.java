@@ -28,12 +28,17 @@ import com.mysql.cj.x.protobuf.MysqlxCrud.DataModel;
 @RestController
 public class IndexController {
     
-    
-    @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping("/")
+    public String home(Model model) {
+        model.addAttribute("message", "Hello, Spring MVC!");
+        return "index";
+    }
+
+    /*@GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
         ClassPathResource resource = new ClassPathResource("static/index.html");
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
-    }
+    }*/
 
     @PostMapping("/")
     @ResponseBody
