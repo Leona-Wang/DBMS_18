@@ -17,16 +17,4 @@ public class DemoApplication {
 
 }
 
-@RestController
-class PageController {
 
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
-
-    @GetMapping("/otherpage")
-    public String otherPage() {
-        return "otherpage";
-    }
-}
