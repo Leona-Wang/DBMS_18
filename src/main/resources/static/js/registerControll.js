@@ -1,4 +1,4 @@
-console.log('Main page loaded');
+console.log('register page loaded');
 
 function submitForm() {
     var username = document.getElementById("username").value;
@@ -18,6 +18,7 @@ function submitForm() {
       .then(message => alert("Server says: " + message));
 }
 
-function toRegister() {
-    window.location.href = 'http://localhost:8080/register';
+function toIndex() {
+    win
+    dow.location.href = 'http://localhost:8080/';
 }

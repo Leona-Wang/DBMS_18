@@ -38,7 +38,7 @@ public class IndexController {
     @ResponseBody
     public String handleFormSubmission(@RequestParam("username") String username, @RequestParam("password") String password) {
         // 处理从表单中获取到的数据
-        String userData = "Username: " + username + ", Password: " + password;
+        String userData = "登入Username: " + username + ", Password: " + password;
         System.out.println(userData);
 
         // 返回响应（可选）
@@ -60,7 +60,8 @@ public class IndexController {
 
         public void setData(String data) {
             this.data = data;
-        }
-    }*/
+        }*/
+    }
 
-}
+
+
