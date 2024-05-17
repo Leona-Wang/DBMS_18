@@ -35,6 +35,17 @@ public class IndexController {
     }
 
     @PostMapping("/")
+    @ResponseBody
+    public String handleFormSubmission(@RequestParam("username") String username, @RequestParam("password") String password) {
+        // 处理从表单中获取到的数据
+        String userData = "Username: " + username + ", Password: " + password;
+        System.out.println(userData);
+
+        // 返回响应（可选）
+        return "Received form data: " + userData;
+    }
+
+    /*@PostMapping("/")
     public String receiveData(@RequestBody DataModel data) {
         System.out.println("Received data: " + data.getData());
         return "Received: " + data.getData();
@@ -50,6 +61,6 @@ public class IndexController {
         public void setData(String data) {
             this.data = data;
         }
-    }
+    }*/
 
 }
