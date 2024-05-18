@@ -17,12 +17,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 @RestController
 public class MainPageController {
+
     @GetMapping(value = "/mainPage", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
+        String username = "John Doe";
         ClassPathResource resource = new ClassPathResource("static/mainPage.html");
-        return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+        String htmlContent = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+        return htmlContent.replace("{username}", username); // 将 {username} 替换为实际的用户名
+        
+        //return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
         
     } 
+
+    @GetMapping("/mainPage")
+    public String getUsername() {
+        String username = "John Doe"; // 從數據庫或其他來源獲取用戶名
+        return username;
+    }
+
+
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class IndexController {
     
+    User user=new User();
     
     @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
@@ -36,6 +37,8 @@ public class IndexController {
         if ("admin".equals(username) && "password".equals(password)) {
             response.put("success", "true");
             response.put("message", "登入成功！");
+            
+            user.username=username;
         } else {
             response.put("success", "false");
             response.put("message", "帳號或密碼錯誤！");
