@@ -9,6 +9,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,12 @@ public class IndexController {
     
     User user=new User();
     
+    /*@GetMapping("/")
+    public String getUsername(Model model) {
+        //String username = "John Doe"; // 從數據庫或其他來源獲取用戶名
+        //model.addAttribute("username", username);
+        return "index"; // 返回視圖名稱
+    }*/
     @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
         ClassPathResource resource = new ClassPathResource("static/index.html");
