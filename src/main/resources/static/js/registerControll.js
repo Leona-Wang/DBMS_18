@@ -15,11 +15,5 @@ function submitForm() {
         },
         body: data
     }).then(response => response.text())
-      .then(message => alert("Server says: " + message));
 
-      
-}
-
-function toIndex() {
-    dow.location.href = 'http://localhost:8080/';
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RegisterController {
 
-
     @GetMapping(value = "/register", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
         ClassPathResource resource = new ClassPathResource("static/register.html");
@@ -28,7 +27,13 @@ public class RegisterController {
     @PostMapping("/register")
     @ResponseBody
     public String handleFormSubmission(@RequestParam("username") String username, @RequestParam("password") String password) {
-        // 处理从表单中获取到的数据
+        
+        /*****************************************/
+        /*這裡放判斷帳號有沒有重複辦過的method(帳號是primary key)，沒有重複申辦就放到DB裡*/
+        /*username是申辦帳號，password是申辦密碼*/
+        /*密碼可以用加密或其他神奇的魔法處理後再放到DB裡，這樣看起來比較專業*/
+        /*****************************************/
+        
         String userData = "註冊Username: " + username + ", Password: " + password;
         System.out.println(userData);
 

@@ -13,10 +13,14 @@ function submitForm() {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: data
-    }).then(response => response.text())
-      .then(message => alert("Server says: " + message));
-}
-
-function toRegister() {
-    window.location.href = 'http://localhost:8080/register';
+    }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                window.location.href = "http://localhost:8080/mainPage";
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
 }
