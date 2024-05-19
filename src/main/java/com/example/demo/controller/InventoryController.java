@@ -56,6 +56,32 @@ public class InventoryController {
         return Arrays.asList("mouse", "cow");
     }
 
+    @PostMapping("/addProductList")
+    @ResponseBody
+    public void addProductList(@RequestParam("productName[]") String[] productNames, @RequestParam("productPrice[]") String[] productPrices) {
+        StringBuilder result = new StringBuilder("Received data:");
+        
+        for (int i = 0; i < productNames.length; i++) {
+            result.append("產品名稱: ").append(productNames[i]).append(", 價格: ").append(productPrices[i]);
+            // 在这里可以进行你的业务逻辑处理
+        }
+        System.out.println(result.toString());
+
+        /*Map<String, String> response = new HashMap<>();
+        
+        if (result.toString().equals("")) {
+            response.put("success", "false");
+            response.put("message", "請輸入要新增的產品再提交！");
+        } else {
+            response.put("success", "true");
+            response.put("message", "已新增產品至產品清單！");
+        }
+        
+        return ResponseEntity.ok(response);*/
+        
+    }
+
+    
     
 }
 

@@ -1,8 +1,32 @@
 #hiddenProductList {
-    display: none; /* 初始隱藏 */
+    display: none;
 }
 
 #tableBorder{
     border-style: solid; 
     border-color: black;
+}
+
+#productTable {
+    display: none;
+}
+
+#addProduct {
+    display: none;
+}
+
+#hiddenInventory{
+    display: none;
+}
+
+#inventoryTable{
+    display: none;
+}
+
+#addInventory{
+    display: none;
+}
+
+#deductInventory{
+    display: none;
 }
