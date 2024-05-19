@@ -1,0 +1,8 @@
+#hiddenProductList {
+    display: none; /* 初始隱藏 */
+}
+
+#tableBorder{
+    border-style: solid; 
+    border-color: black;
+}

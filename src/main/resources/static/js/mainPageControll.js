@@ -6,3 +6,15 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .catch(error => console.error('Error:', error));
 });
+
+function gotoInventory(){
+    window.location.href = "http://localhost:8080/inventory";
+}
+
+function gotoOtherExpense(){
+    window.location.href = "http://localhost:8080/otherExpense";
+}
+
+function gotoReport(){
+    window.location.href = "http://localhost:8080/report";
+}

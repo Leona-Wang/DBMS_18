@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>貨物紀錄</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="static/js/inventoryControll.js"></script>
 </head>
 <body>
     <h1>我是貨物紀錄(產品清單/現有存貨)</h1>
+    <button id="productListButton">商品列表</button>
+    <div id="hiddenProductList" style="display: none;">
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>產品名稱</th>
+                    <th>價格</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 這裡將由JavaScript動態生成 -->
+            </tbody>
+        </table>
+    </div>
+    
 </body>
 </html>

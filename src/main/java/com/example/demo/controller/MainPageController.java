@@ -35,15 +35,10 @@ public class MainPageController {
         String username = u.username;
         ClassPathResource resource = new ClassPathResource("static/mainPage.html");
         String htmlContent = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
-        return htmlContent.replace("{username}", username); // 将 {username} 替换为实际的用户名
+        htmlContent=htmlContent.replace("{username}", username); // 将 {username} 替换为实际的用户名
+        return htmlContent;
         
     } 
-
-    @GetMapping("/mainPage")
-    public String getUsername() {
-        String username = "John Doe"; // 從數據庫或其他來源獲取用戶名
-        return username;
-    }
 
 
 }
