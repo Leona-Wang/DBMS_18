@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,9 +33,14 @@ public class InventoryController {
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
     }
 
-    @GetMapping
+    @GetMapping("/inventoryProductList")
     public List<Product> getAllUsers() {
-        // 假設這裡從服務中獲取用戶列表
+        
+        /*在這裡放從DB撈出來的產品清單 */
+        /*顯示的資料可以從Product新增其他屬性 */
+        /*這裡改完inventory.html顯示的標題也要改，inventoryControll.js也要改 */
+        /*可以的話全部的值都用String塞，這樣回傳比較不會出問題 */
+        /*html跟js不會改的話再跟我說，我去改 */
         List<Product> products = new ArrayList<>();
 
         Product mouse=new Product("mouse","123");
@@ -42,6 +48,12 @@ public class InventoryController {
         products.add(mouse);
         products.add(cow);
         return products;
+    }
+
+    @GetMapping("/inventoryOptions")
+    public List<String> getDropdownOptions() {
+        // 模拟选项数据
+        return Arrays.asList("mouse", "cow");
     }
 
     

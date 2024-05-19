@@ -9,9 +9,9 @@
 </head>
 <body>
     <h1>我是貨物紀錄(產品清單/現有存貨)</h1>
-    <button id="productListButton">商品列表</button>
-    <div id="hiddenProductList" style="display: none;">
-        <table id="userTable">
+    <button id="productListButton">產品清單</button>
+    <div id="hiddenProductList">
+        <table id="productTable">
             <thead>
                 <tr>
                     <th>產品名稱</th>
@@ -22,7 +22,31 @@
                 <!-- 這裡將由JavaScript動態生成 -->
             </tbody>
         </table>
+        <button id="addProductListButton">新增產品</button>
+        
     </div>
-    
+
+    <button id="inventoryButton">現有存貨</button>
+    <div id="hiddenInventory">
+        <button id="seeInventoryButton">查看存貨紀錄</button>
+        <table id="inventoryTable">
+            <thead>
+                <tr>
+                    <th>產品名稱</th>
+                    <th>剩餘數量</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 這裡將由JavaScript動態生成 -->
+            </tbody>
+        </table>
+        <button id="addInventoryButton">新增存貨</button>
+        <form id="addInventoryForm">
+            <select id="addInventoryOption"></select>
+            <input type="text" id="addBox" name="addBox" placeholder="請輸入新增數量(單位：箱)">
+            <button type="button" onclick="submitForm()">登入</button>
+        </form>
+        <button id="deleteInventoryButton">新增出貨</button>
+    </div>
 </body>
 </html>
