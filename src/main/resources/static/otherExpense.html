@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>費用紀錄</title>
+    <link rel="stylesheet" href="static/css/otherExpenseStyle.css">
+    <script src="static/js/otherExpenseControll.js"></script>
 </head>
 <body>
     <h1>我是費用紀錄(水電瓦斯...)</h1>
+    <button id="seeExpenseButton">費用清單</button>
+    <button id="addExpenseButton">新增費用</button>
+
+    <table id="expenseTable">
+        <thead>
+            <tr>
+                <th>日期</th>
+                <th>項目</th>
+                <th>花費</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 這裡將由JavaScript動態生成 -->
+        </tbody>
+    </table>
+
+    <div id="addExpense">
+        <form id="addExpenseForm" action="/addExpense" method="post">
+            <div id="input-container" class="input-container">
+                <!-- 初始的输入框组 -->
+                <input type="date" id="expenseDate[]" name="expenseDate[]" value="2024-01-05" min="2024-01-01" max="2024-12-31" />
+                <input type="text" name="expenseType[]" placeholder="輸入項目">
+                <input type="text" name="expenseCost[]" placeholder="花費">
+            </div>
+        </form>
+        <button onclick="addExpenseInput()">添加一组</button>
+        <button onclick="submitAddExpenseForm()">提交</button>
+    </div>
 </body>
 </html>

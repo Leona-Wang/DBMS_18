@@ -2,7 +2,10 @@ package com.example.demo.controller;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.core.io.ClassPathResource;
@@ -27,6 +30,30 @@ public class OtherExpenseController {
     public String serveHomePage() throws IOException {
         ClassPathResource resource = new ClassPathResource("static/otherExpense.html");
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+    }
+
+    @GetMapping("/otherExpenseList")
+    public List<OtherExpense> getAllExpense() {
+
+        List<OtherExpense> expenses = new ArrayList<>();
+
+        OtherExpense e1=new OtherExpense("2024-01-05","水費", "456");
+        OtherExpense e2=new OtherExpense("2024-04-10","電費", "123");
+        expenses.add(e1);
+        expenses.add(e2);
+        return expenses;
+    }
+
+    @PostMapping("/addExpense")
+    public void addExpense(@RequestParam("expenseDate[]") List<String> dates,
+    @RequestParam("expenseType[]") List<String> types,
+                            @RequestParam("expenseCost[]") List<String> costs) {
+        for (int i = 0; i < dates.size(); i++) {
+            String date=dates.get(i);
+            String type = types.get(i);
+            String cost = costs.get(i);
+            System.out.println("date: " + date + ", type: " + type+", cost: " + cost);
+        }
     }
 
     
