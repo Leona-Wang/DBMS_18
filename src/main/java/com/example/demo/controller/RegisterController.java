@@ -26,18 +26,17 @@ public class RegisterController {
 
     @PostMapping("/register")
     @ResponseBody
-    public String handleFormSubmission(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public String getRegister(@RequestParam("username") String username, @RequestParam("password") String password) {
         
-        /*****************************************/
         /*這裡放判斷帳號有沒有重複辦過的method(帳號是primary key)，沒有重複申辦就放到DB裡*/
         /*username是申辦帳號，password是申辦密碼*/
         /*密碼可以用加密或其他神奇的魔法處理後再放到DB裡，這樣看起來比較專業*/
-        /*****************************************/
+        /*現在預設是送出後會直接進系統，可以改 */
         
         String userData = "註冊Username: " + username + ", Password: " + password;
         System.out.println(userData);
 
-        // 返回响应（可选）
+        
         return "Received form data: " + userData;
     }
 }

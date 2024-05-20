@@ -51,39 +51,34 @@ public class InventoryController {
 
     @GetMapping("/inventoryOptions")
     public List<String> getDropdownOptions() {
-        // 模拟选项数据
+        
+        /*把商品清單項目名稱拉出來，當成新增銷售存貨的選擇項目 */
         return Arrays.asList("mouse", "cow");
     }
 
     @PostMapping("/addProductList")
     @ResponseBody
     public void addProductList(@RequestParam("productName[]") String[] productNames, @RequestParam("productPrice[]") String[] productPrices) {
+        
+        /*把這裡取到的資料塞到DB商品清單去 */
+        
         StringBuilder result = new StringBuilder("Received data:");
         
         for (int i = 0; i < productNames.length; i++) {
             result.append("產品名稱: ").append(productNames[i]).append(", 價格: ").append(productPrices[i]);
-            // 在这里可以进行你的业务逻辑处理
+            
         }
         System.out.println(result.toString());
 
-        /*Map<String, String> response = new HashMap<>();
-        
-        if (result.toString().equals("")) {
-            response.put("success", "false");
-            response.put("message", "請輸入要新增的產品再提交！");
-        } else {
-            response.put("success", "true");
-            response.put("message", "已新增產品至產品清單！");
-        }
-        
-        return ResponseEntity.ok(response);*/
-        
     }
 
     @PostMapping("/addInventory")
     public void addInventory(@RequestParam("addInventoryOption[]") List<String> options,
                             @RequestParam("addInventoryBox[]") List<String> boxes) {
-        for (int i = 0; i < options.size(); i++) {
+        
+            /*把這裡取到的資料塞到DB的新增存貨裡 */
+            
+            for (int i = 0; i < options.size(); i++) {
             String option = options.get(i);
             String box = boxes.get(i);
             System.out.println("Option: " + option + ", Box: " + box);
@@ -94,7 +89,7 @@ public class InventoryController {
     @GetMapping("/inventoryInventoryList")
     public List<Product> getInventory() {
         
-        /*在這裡放從DB撈出來的產品清單 */
+        /*在這裡放從DB撈出來的存貨清單 */
         /*顯示的資料可以從Product新增其他屬性 */
         /*這裡改完inventory.html顯示的標題也要改，inventoryControll.js也要改 */
         /*可以的話全部的值都用String塞，這樣回傳比較不會出問題 */
@@ -111,7 +106,10 @@ public class InventoryController {
     @PostMapping("/deductInventory")
     public void deductInventory(@RequestParam("deductInventoryOption[]") List<String> options,
                             @RequestParam("deductInventoryBox[]") List<String> boxes) {
-        for (int i = 0; i < options.size(); i++) {
+        
+            /*把這裡的資料調整去DB存貨清單 */
+                                
+            for (int i = 0; i < options.size(); i++) {
             String option = options.get(i);
             String box = boxes.get(i);
             System.out.println("Option: " + option + ", Pack: " + box);

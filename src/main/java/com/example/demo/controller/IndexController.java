@@ -37,10 +37,11 @@ public class IndexController {
 
     @PostMapping("/")
     @ResponseBody
-    public ResponseEntity<Map<String, String>> handleFormSubmission(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public ResponseEntity<Map<String, String>> getLogin(@RequestParam("username") String username, @RequestParam("password") String password) {
         Map<String, String> response = new HashMap<>();
         
-        // 假设这里的判断是如果用户名为 "admin" 且密码为 "password" 则成功，否则失败
+        /*這裡放判斷帳號密碼對不對的method */
+        /*預設是帳號=admin，密碼是password */
         if ("admin".equals(username) && "password".equals(password)) {
             response.put("success", "true");
             response.put("message", "登入成功！");
@@ -53,19 +54,8 @@ public class IndexController {
         
         return ResponseEntity.ok(response);
     }
-    /*@PostMapping("/")
-    @ResponseBody
-    public String handleFormSubmission(@RequestParam("username") String username, @RequestParam("password") String password) {
-        // 处理从表单中获取到的数据
-        String userData = "登入Username: " + username + ", Password: " + password;
-        System.out.println(userData);
-
-        // 返回响应（可选）
-        return "Received form data: " + userData;
-    }*/
-
     
-    }
+}
 
 
 

@@ -35,6 +35,8 @@ public class OtherExpenseController {
     @GetMapping("/otherExpenseList")
     public List<OtherExpense> getAllExpense() {
 
+        /*把其他費用那張表拉出來 */
+
         List<OtherExpense> expenses = new ArrayList<>();
 
         OtherExpense e1=new OtherExpense("2024-01-05","水費", "456");
@@ -48,6 +50,9 @@ public class OtherExpenseController {
     public void addExpense(@RequestParam("expenseDate[]") List<String> dates,
     @RequestParam("expenseType[]") List<String> types,
                             @RequestParam("expenseCost[]") List<String> costs) {
+        
+        /*把這裡取到的資料丟進去DB費用表*/
+
         for (int i = 0; i < dates.size(); i++) {
             String date=dates.get(i);
             String type = types.get(i);

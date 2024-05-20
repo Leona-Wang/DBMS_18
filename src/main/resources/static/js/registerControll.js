@@ -15,5 +15,5 @@ function submitForm() {
         },
         body: data
     }).then(response => response.text())
-
+    window.location.href = "http://localhost:8080/mainPage";
 }
