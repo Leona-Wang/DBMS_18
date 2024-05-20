@@ -81,8 +81,44 @@ public class InventoryController {
         
     }
 
-    
-    
+    @PostMapping("/addInventory")
+    public void addInventory(@RequestParam("addInventoryOption[]") List<String> options,
+                            @RequestParam("addInventoryBox[]") List<String> boxes) {
+        for (int i = 0; i < options.size(); i++) {
+            String option = options.get(i);
+            String box = boxes.get(i);
+            System.out.println("Option: " + option + ", Box: " + box);
+        }
+    }
+
+
+    @GetMapping("/inventoryInventoryList")
+    public List<Product> getInventory() {
+        
+        /*在這裡放從DB撈出來的產品清單 */
+        /*顯示的資料可以從Product新增其他屬性 */
+        /*這裡改完inventory.html顯示的標題也要改，inventoryControll.js也要改 */
+        /*可以的話全部的值都用String塞，這樣回傳比較不會出問題 */
+        /*html跟js不會改的話再跟我說，我去改 */
+        List<Product> products = new ArrayList<>();
+
+        Product mouse=new Product("mouse","4");
+        Product cow=new Product("cow","5");
+        products.add(mouse);
+        products.add(cow);
+        return products;
+    }
+
+    @PostMapping("/deductInventory")
+    public void deductInventory(@RequestParam("deductInventoryOption[]") List<String> options,
+                            @RequestParam("deductInventoryBox[]") List<String> boxes) {
+        for (int i = 0; i < options.size(); i++) {
+            String option = options.get(i);
+            String box = boxes.get(i);
+            System.out.println("Option: " + option + ", Pack: " + box);
+        }
+    }
+
 }
 
 

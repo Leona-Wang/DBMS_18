@@ -34,7 +34,7 @@
                 </div>
             </form>
             <button onclick="addProductInput()">添加一组</button>
-            <button onclick="submitForm()">提交</button>
+            <button onclick="submitAddProductForm()">提交</button>
         </div>
         
         
@@ -48,7 +48,7 @@
             <thead>
                 <tr>
                     <th>產品名稱</th>
-                    <th>剩餘數量</th>
+                    <th>剩餘數量(單位：瓶、包)</th>
                 </tr>
             </thead>
             <tbody>
@@ -57,19 +57,33 @@
         </table>
         
         <div id="addInventory">
-            <form id="addInventoryForm">
-                <select id="addInventoryOption"></select>
-                <input type="text" id="addBox" name="addBox" placeholder="請輸入新增數量(單位：箱)">
-                <button type="button" onclick="submitForm()">登入</button>
+            <form id="addInventoryForm" action="/addInventory" method="POST">
+                <div id="addInventory-input-container">
+                    <div class="input-group">
+                        <select id="addInventoryOption[]" name="addInventoryOption[]">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                        <input type="text" name="addInventoryBox[]" placeholder="請輸入新增數量(單位：箱)">
+                    </div>
+                </div>
             </form>
+            <button type="button" onclick="addAddInventoryInput()">添加一组</button>
+            <button type="button" onclick="submitAddInventoryForm()">提交</button>
         </div>
         
         <div id="deductInventory">
-            <form id="deductInventoryForm">
-                <select id="addInventoryOption"></select>
-                <input type="text" id="addBox" name="addBox" placeholder="請輸入新增數量(單位：箱)">
-                <button type="button" onclick="submitForm()">登入</button>
+            <form id="deductInventoryForm" action="/deductInventory" method="POST">
+                <div id="deductInventory-input-container">
+                    <div class="input-group">
+                        <select id="deductInventoryOption[]" name="deductInventoryOption[]">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                        <input type="text" name="deductInventoryBox[]" placeholder="請輸入賣出數量(單位：瓶、包)">
+                    </div>
+                </div>
             </form>
+            <button type="button" onclick="addDeductInventoryInput()">添加一组</button>
+            <button type="button" onclick="submitDeductInventoryForm()">提交</button>
         </div>
         
     </div>
