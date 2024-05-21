@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-public class MainPageController {
+public class MainPageController extends SqlManager{
 
     User u=new User();
 
@@ -39,6 +39,62 @@ public class MainPageController {
         return htmlContent;
         
     } 
+    public void loginButtonClicked(MouseEvent event) {
+		
+		
+		Stage stage=(Stage)mainPane.getScene().getWindow();
+		stage.close();
+		
+		try {
+
+			
+		}catch(Exception e) {
+            e.printStackTrace();
+        }
+	}
+
+    public void logoutButtonClicked(MouseEvent event) {
+		
+		
+		Stage stage=(Stage)mainPane.getScene().getWindow();
+		stage.close();
+		
+		try {
+
+			
+		}catch(Exception e) {
+            e.printStackTrace();
+        }
+	}
+	
+	public void registerButtonClicked(MouseEvent event) {
+		
+		
+		Stage stage=(Stage)mainPane.getScene().getWindow();
+		stage.close();
+		
+		try {
+
+			
+		}catch(Exception e) {
+            e.printStackTrace();
+        }
+	}
+
+    public void productRecordButtonClicked(MouseEvent event) {
+		
+		
+		Stage stage=(Stage)mainPane.getScene().getWindow();
+		stage.close();
+		
+		try {
+
+			
+		}catch(Exception e) {
+            e.printStackTrace();
+        }
+	}
+
 
 
 }

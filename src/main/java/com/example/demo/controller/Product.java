@@ -6,6 +6,7 @@ public class Product {
     public String productPrice="";
     public String remainPack="";
     public String addBox="";
+    
 
     public Product(String prouctName,String productPrice){
         this.productName=prouctName;

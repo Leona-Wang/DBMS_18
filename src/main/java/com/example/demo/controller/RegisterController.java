@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class RegisterController {
+public class RegisterController extends SqlManager{
 
     @GetMapping(value = "/register", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
@@ -34,6 +34,7 @@ public class RegisterController {
         /*現在預設是送出後會直接進系統，可以改 */
         
         String userData = "註冊Username: " + username + ", Password: " + password;
+        enroll()
         System.out.println(userData);
 
         
