@@ -35,7 +35,7 @@ public class RegisterController extends SqlManager{
         
         String userData = "註冊Username: " + username + ", Password: " + password;
        //幫我填parameter
-        enroll()
+        enroll(username,password);
         System.out.println(userData);
 
         
