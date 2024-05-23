@@ -40,7 +40,7 @@ public class OtherExpenseController {
         List<OtherExpense> expenses = new ArrayList<>();
 
         OtherExpense e1=new OtherExpense("2024-01-05","水費", "456");
-        OtherExpense e2=new OtherExpense("2024-04-10","電費", "123");
+        OtherExpense e2=new OtherExpense("2024-04-10","電費", "123");   
         expenses.add(e1);
         expenses.add(e2);
         return expenses;
@@ -52,6 +52,7 @@ public class OtherExpenseController {
                             @RequestParam("expenseCost[]") List<String> costs) {
         
         /*把這裡取到的資料丟進去DB費用表*/
+        addBill(shopID, types.get(0), dates.get(0), costs.get(0));
 
         for (int i = 0; i < dates.size(); i++) {
             String date=dates.get(i);
