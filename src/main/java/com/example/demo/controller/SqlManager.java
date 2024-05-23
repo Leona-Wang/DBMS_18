@@ -79,6 +79,35 @@ public class SqlManager {
         return executeQuery(query);
     }
 
+	/*這個是bill的取出方式
+	 *  String[][] result = sql.getBillsByMonth(5);
+        for (String[] row : result) {
+            for (String column : row) {
+                System.out.print(column + "\t");
+            }
+            System.out.println();
+        }
+        output:
+        1	1001	Bill 1	2024-05-01	500	
+		1	1002	Bill 2	2024-05-02	700	
+		2	2001	Bill 3	2024-05-03	300	
+	*/
+
+	//帳單添加成功
+	public void addBill(String billID, String billName, String occurDate, double cost) {
+		// Add entry to the 'bill' table
+		String billColumns = "shopID, billID";
+		String billData = String.format("'%s', '%s'", this.shopID, billID);
+		addData("bill", billColumns, billData);
+	
+		// Add entry to the 'bill_info' table
+		String billInfoColumns = "billID, billName, occurDate, cost";
+		String billInfoData = String.format("'%s', '%s', '%s', %f", billID, billName, occurDate, cost);
+		addData("bill_info", billInfoColumns, billInfoData);
+	
+		System.out.println("帳單添加成功！");
+	}
+	
     // 新增進口
     public void addImport(String itemID, int importAmount, String importDate) {
         String table = "import";
@@ -102,6 +131,7 @@ public class SqlManager {
         return results.isEmpty() ? null : results.get(0);
     }
 
+	
     // 新增出口
     public void addExport(String itemID, int exportAmount, String exportDate) {
         String table = "export";
@@ -165,6 +195,8 @@ public class SqlManager {
         String query = String.format("UPDATE import SET %s = '%s' WHERE shopID = '%s' AND itemID = '%s'", columnName, newValue, shopID, itemID);
         jdbcTemplate.update(query);
     }
+
+	
 
     // 添加資料到指定表格
     private void addData(String table, String columns, String data) {
