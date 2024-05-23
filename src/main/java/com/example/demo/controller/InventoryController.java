@@ -84,7 +84,7 @@ public class InventoryController extends SqlManager{
             String option = options.get(i);
             String box = boxes.get(i);
             //幫我填parameter
-            addInventory()
+            addInventory();
             System.out.println("Option: " + option + ", Box: " + box);
         }
     }
