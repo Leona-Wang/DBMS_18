@@ -93,108 +93,109 @@ public class SqlManager {
 		2	2001	Bill 3	2024-05-03	300	
 	*/
 
-	//帳單添加成功
-	public void addBill(String billID, String billName, String occurDate, double cost) {
-		// Add entry to the 'bill' table
-		String billColumns = "shopID, billID";
-		String billData = String.format("'%s', '%s'", this.shopID, billID);
-		addData("bill", billColumns, billData);
+	public void addBill(String shopID, String billName, String occurDate, String cost) {
+		// 在 bill 表格中插入帳單資訊
+		String billInsertQuery = "INSERT INTO bill (shopID) VALUES (?)";
+		jdbcTemplate.update(billInsertQuery, shopID);
 	
-		// Add entry to the 'bill_info' table
-		String billInfoColumns = "billID, billName, occurDate, cost";
-		String billInfoData = String.format("'%s', '%s', '%s', %f", billID, billName, occurDate, cost);
-		addData("bill_info", billInfoColumns, billInfoData);
+		// 獲取剛插入的帳單的 billID
+		String getBillIDQuery = "SELECT LAST_INSERT_ID()";
+		@SuppressWarnings("null")
+		int billID = jdbcTemplate.queryForObject(getBillIDQuery, Integer.class);
+	
+		// 在 bill_info 表格中插入帳單資訊
+		String billInfoInsertQuery = "INSERT INTO bill_info (billID, billName, occurDate, cost) VALUES (?, ?, ?, ?)";
+		jdbcTemplate.update(billInfoInsertQuery, billID, billName, occurDate, cost);
 	
 		System.out.println("帳單添加成功！");
 	}
 	
-    // 新增進口
-    public void addImport(String itemID, int importAmount, String importDate) {
-        String table = "import";
-        String columns = "shopID, itemID, importAmount, importDate";
-        String data = String.format("%s, %s, %d, '%s'", this.shopID, itemID, importAmount, importDate);
-        addData(table, columns, data);
-    }
-
-    // 新增商品
-    public void addItem(String itemID, String itemName, int unitPerBox, int importPrice, int sellingPricePerUnit, int alertAmount) {
-        String table = "item";
-        String columns = "shopID, itemID, itemName, unitPerBox, importPrice, sellingPricePerUnit, alertAmount";
-        String data = String.format("'%s', '%s', '%s', %d, %d, %d, %d", this.shopID, itemID, itemName, unitPerBox, importPrice, sellingPricePerUnit, alertAmount);
-        addData(table, columns, data);
-    }
-
-    // 根據商品名稱獲取商品ID
-    public String getItemIDByName(String itemName) {
-        String query = String.format("SELECT itemID FROM item WHERE itemName = '%s'", itemName);
-        List<String> results = jdbcTemplate.query(query, (rs, rowNum) -> rs.getString("itemID"));
-        return results.isEmpty() ? null : results.get(0);
-    }
-
+	// 新增進口
+	public void addImport(String itemID, String importAmount, String importDate) {
+		String table = "import";
+		String columns = "shopID, itemID, importAmount, importDate";
+		String data = String.format("%s, %s, %d, '%s'", this.shopID, itemID, importAmount, importDate);
+		addData(table, columns, data);
+	}
 	
-    // 新增出口
-    public void addExport(String itemID, int exportAmount, String exportDate) {
-        String table = "export";
-        String columns = "shopID, itemID, exportAmount, exportDate";
-        String data = String.format("'%s', '%s', %d, '%s'", this.shopID, itemID, exportAmount, exportDate);
-        addData(table, columns, data);
-    }
+	// 新增商品
+	public void addItem(String shopID, String itemName, String unitPerBox, String importPrice, String sellingPricePerUnit, String alertAmount) {
+		String table = "item";
+		String columns = "shopID, itemName, unitPerBox, importPrice, sellingPricePerUnit, alertAmount";
+		String data = String.format("'%s','%s', %d, %d, %d, %d", shopID, itemName, Integer.parseInt(unitPerBox), Integer.parseInt(importPrice), Integer.parseInt(sellingPricePerUnit), Integer.parseInt(alertAmount));
+		addData(table, columns, data);
+	}
+	
+	// 根據商品名稱獲取商品ID
+	public String getItemIDByName(String itemName) {
+		String query = String.format("SELECT itemID FROM item WHERE itemName = '%s'", itemName);
+		List<String> results = jdbcTemplate.query(query, (rs, rowNum) -> rs.getString("itemID"));
+		return results.isEmpty() ? null : results.get(0);
+	}
+	
+	// 新增出口
+	public void addExport(String shopID, String itemID, String exportAmount, String exportDate) {
+		String table = "export";
+		String columns = "shopID, itemID, exportAmount, exportDate";
+		String data = String.format("'%s', '%s', %d, '%s'", shopID, itemID, Integer.parseInt(exportAmount), exportDate);
+		addData(table, columns, data);
+	}
+	
+	// 新增庫存
+	public void addInventory(String shopID, String itemID, String remainAmount) {
+		String table = "inventory";
+		String columns = "shopID, itemID, remainAmount";
+		String data = String.format("'%s', '%s', %d", shopID, itemID, Integer.parseInt(remainAmount));
+		addData(table, columns, data);
+	}
+	
+	// 更新庫存
+	public void updateInventory(String shopID, String itemID, String newAmount) {
+		String query = String.format("UPDATE inventory SET remainAmount = %d WHERE shopID = '%s' AND itemID = '%s'", Integer.parseInt(newAmount), shopID, itemID);
+		jdbcTemplate.update(query);
+	}
+	
+	// 獲取庫存量
+	public int getInventoryAmount(String shopID, String itemID) {
+		String[][] result = search("remainAmount", "inventory", String.format("shopID = '%s' AND itemID = '%s'", shopID, itemID));
+		return (result != null && result.length > 0 && result[0].length > 0) ? Integer.parseInt(result[0][0]) : 0;
+	}
+	
+	// 更新商品表格的指定列
+	public void updateItemColumn(String itemID, String columnName, String newValue) {
+		String query = String.format("UPDATE item SET %s = '%s' WHERE itemID = '%s'", columnName, newValue, itemID);
+		jdbcTemplate.update(query);
+	}
+	
+	// 更新店鋪表格的指定列
+	public void updateShopColumn(String shopID, String columnName, String newValue) {
+		String query = String.format("UPDATE shop SET %s = '%s' WHERE shopID = '%s'", columnName, newValue, shopID);
+		jdbcTemplate.update(query);
+	}
+	
+	// 更新帳單表格的指定列
+	public void updateBillColumn(String shopID, String billID, String columnName, String newValue) {
+		String query = String.format("UPDATE bill SET %s = '%s' WHERE shopID = '%s' AND billID = '%s'", columnName, newValue, shopID, billID);
+		jdbcTemplate.update(query);
+	}
+	
+	// 更新帳單資訊表格的指定列
+	public void updateBillInfoColumn(String billID, String columnName, String newValue) {
+		String query = String.format("UPDATE bill_info SET %s = '%s' WHERE billID = '%s'", columnName, newValue, billID);
+		jdbcTemplate.update(query);
+	}
 
-    // 新增庫存
-    public void addInventory(String itemID, int remainAmount) {
-        String table = "inventory";
-        String columns = "shopID, itemID, remainAmount";
-        String data = String.format("'%s', '%s', %d", this.shopID, itemID, remainAmount);
-        addData(table, columns, data);
-    }
+	// 更新出口表格的指定列
+	public void updateExportColumn(String shopID, String itemID, String columnName, String newValue) {
+		String query = String.format("UPDATE export SET %s = '%s' WHERE shopID = '%s' AND itemID = '%s'", columnName, newValue, shopID, itemID);
+		jdbcTemplate.update(query);
+	}
 
-    // 更新庫存
-    public void updateInventory(String itemID, int newAmount) {
-        String query = String.format("UPDATE inventory SET remainAmount = %d WHERE shopID = '%s' AND itemID = '%s'", newAmount, this.shopID, itemID);
-        jdbcTemplate.update(query);
-    }
-
-    // 獲取庫存量
-    public int getInventoryAmount(String itemID) {
-        String[][] result = search("remainAmount", "inventory", String.format("shopID = '%s' AND itemID = '%s'", this.shopID, itemID));
-        return (result != null && result.length > 0 && result[0].length > 0) ? Integer.parseInt(result[0][0]) : 0;
-    }
-
-    // 更新商品表格的指定列
-    public void updateItemColumn(String itemID, String columnName, String newValue) {
-        String query = String.format("UPDATE item SET %s = '%s' WHERE itemID = '%s'", columnName, newValue, itemID);
-        jdbcTemplate.update(query);
-    }
-
-    // 更新店鋪表格的指定列
-    public void updateShopColumn(String shopID, String columnName, String newValue) {
-        String query = String.format("UPDATE shop SET %s = '%s' WHERE shopID = '%s'", columnName, newValue, shopID);
-        jdbcTemplate.update(query);
-    }
-
-    // 更新帳單表格的指定列
-    public void updateBillColumn(String shopID, String billID, String columnName, String newValue) {
-        String query = String.format("UPDATE bill SET %s = '%s' WHERE shopID = '%s' AND billID = '%s'", columnName, newValue, shopID, billID);
-        jdbcTemplate.update(query);
-    }
-
-    // 更新帳單資訊表格的指定列
-    public void updateBillInfoColumn(String billID, String columnName, String newValue) {
-        String query = String.format("UPDATE bill_info SET %s = '%s' WHERE billID = '%s'", columnName, newValue, billID);
-        jdbcTemplate.update(query);
-    }
-
-    // 更新出口表格的指定列
-    public void updateExportColumn(String shopID, String itemID, String columnName, String newValue) {
-        String query = String.format("UPDATE export SET %s = '%s' WHERE shopID = '%s' AND itemID = '%s'", columnName, newValue, shopID, itemID);
-        jdbcTemplate.update(query);
-    }
-
-    // 更新進口表格的指定列
-    public void updateImportColumn(String shopID, String itemID, String columnName, String newValue) {
-        String query = String.format("UPDATE import SET %s = '%s' WHERE shopID = '%s' AND itemID = '%s'", columnName, newValue, shopID, itemID);
-        jdbcTemplate.update(query);
-    }
+	// 更新進口表格的指定列
+	public void updateImportColumn(String shopID, String itemID, String columnName, String newValue) {
+		String query = String.format("UPDATE import SET %s = '%s' WHERE shopID = '%s' AND itemID = '%s'", columnName, newValue, shopID, itemID);
+		jdbcTemplate.update(query);
+	}
 
 	
 
