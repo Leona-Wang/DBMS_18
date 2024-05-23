@@ -67,8 +67,8 @@ public class InventoryController extends SqlManager{
         
         for (int i = 0; i < productNames.length; i++) {
             result.append("產品名稱: ").append(productNames[i]).append(", 價格: ").append(productPrices[i]);
-            //幫我填parameter
-            addItem()
+            
+            //addItem()
         }
         System.out.println(result.toString());
 
@@ -83,8 +83,7 @@ public class InventoryController extends SqlManager{
             for (int i = 0; i < options.size(); i++) {
             String option = options.get(i);
             String box = boxes.get(i);
-            //幫我填parameter
-            addInventory();
+            addInventory(option,Integer.parseInt(box));
             System.out.println("Option: " + option + ", Box: " + box);
         }
     }
@@ -116,8 +115,7 @@ public class InventoryController extends SqlManager{
             for (int i = 0; i < options.size(); i++) {
             String option = options.get(i);
             String box = boxes.get(i);
-            //幫我填parameter
-            updateInventory()
+            updateInventory(option, Integer.parseInt(box));
             System.out.println("Option: " + option + ", Pack: " + box);
         }
     }
