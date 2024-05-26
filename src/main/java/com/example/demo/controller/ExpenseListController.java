@@ -22,46 +22,30 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class OtherExpenseController {
+public class ExpenseListController {
     
-    User user=new User();
-    
-    /*@GetMapping(value = "/otherExpense", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(value = "/expenseList", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
-        ClassPathResource resource = new ClassPathResource("static/otherExpense.html");
+        ClassPathResource resource = new ClassPathResource("static/expenseList.html");
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
-    }*/
+    }
 
-    /*@GetMapping("/otherExpenseList")
-    public List<OtherExpense> getAllExpense() {
-
-        /*把其他費用那張表拉出來 
-
+    @GetMapping("/showExpenseList")
+    public List<OtherExpense> showInventoryList() {
+        
+        /*在這裡放從DB撈出來的產品清單 */
+        /*顯示的資料可以從Product新增其他屬性 */
+        /*這裡改完inventory.html顯示的標題也要改，inventoryControll.js也要改 */
+        /*可以的話全部的值都用String塞，這樣回傳比較不會出問題 */
+        /*html跟js不會改的話再跟我說，我去改 */
         List<OtherExpense> expenses = new ArrayList<>();
 
-        OtherExpense e1=new OtherExpense("2024-01-05","水費", "456");
-        OtherExpense e2=new OtherExpense("2024-04-10","電費", "123");   
+        OtherExpense e1=new OtherExpense("0","2024-01-01","e1","500");
+        OtherExpense e2=new OtherExpense("1","2024-01-02","e2","400");
         expenses.add(e1);
         expenses.add(e2);
         return expenses;
-    }*/
-
-    /*@PostMapping("/addExpense")
-    public void addExpense(@RequestParam("expenseDate[]") List<String> dates,
-    @RequestParam("expenseType[]") List<String> types,
-                            @RequestParam("expenseCost[]") List<String> costs) {
-        
-        /*把這裡取到的資料丟進去DB費用表
-        addBill(shopID, types.get(0), dates.get(0), costs.get(0));
-
-        for (int i = 0; i < dates.size(); i++) {
-            String date=dates.get(i);
-            String type = types.get(i);
-            String cost = costs.get(i);
-            System.out.println("date: " + date + ", type: " + type+", cost: " + cost);
-        }
-    }*/
-
+    }
     
 }
 

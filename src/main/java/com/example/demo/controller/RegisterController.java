@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RegisterController extends SqlManager{
 
+    public RegisterController() {
+        super();
+        //TODO Auto-generated constructor stub
+    }
+
     @GetMapping(value = "/register", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
         ClassPathResource resource = new ClassPathResource("static/register.html");
@@ -35,7 +40,7 @@ public class RegisterController extends SqlManager{
         
         String userData = "註冊Username: " + username + ", Password: " + password;
        //幫我填parameter
-        enroll(username,password);
+        //enroll(username,password);
         System.out.println(userData);
 
         

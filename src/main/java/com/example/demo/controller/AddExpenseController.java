@@ -2,7 +2,10 @@ package com.example.demo.controller;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.core.io.ClassPathResource;
@@ -19,16 +22,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ReportController {
+public class AddExpenseController {
     
-    User user=new User();
-    
-    /*@GetMapping(value = "/report", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(value = "/addExpense", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
-        ClassPathResource resource = new ClassPathResource("static/report.html");
+        ClassPathResource resource = new ClassPathResource("static/addExpense.html");
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
-    }*/
+    }
 
+    @PostMapping("/addExpenseList")
+    public void addProductList(@RequestParam("expenseType") List<String> expenseType,
+    @RequestParam("expenseCost") List<String> expenseCost,
+    @RequestParam("expenseDate") List<String> expenseDate) {
+        
+        /*把這裡取到的資料丟進去DB費用表*/
+
+        System.out.println("expenseType: " + expenseType + 
+        "\nexpenseCost: " + expenseCost+
+        "\nexpenseDate: " + expenseDate);
+
+        System.out.println("good");
+
+        
+    }
     
 }
 

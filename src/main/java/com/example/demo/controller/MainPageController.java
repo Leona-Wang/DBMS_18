@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-public class MainPageController extends SqlManager{
+public class MainPageController {
+
+    public MainPageController() throws SQLException {
+        super();
+        //TODO Auto-generated constructor stub
+    }
 
     User u=new User();
 
@@ -39,8 +45,5 @@ public class MainPageController extends SqlManager{
         return htmlContent;
         
     } 
-
-
-
-
+    
 }
