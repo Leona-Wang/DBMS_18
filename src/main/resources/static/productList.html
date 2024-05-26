@@ -5,9 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>登入頁面</title>
-        <script src="static/js/indexControll.js"></script>
-
+        <title>會計系統</title>
+        <script src="static/js/productListControll.js"></script>
         <style type="text/css">
 
             .whitebtn {
@@ -41,11 +40,13 @@
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container px-lg-5">
-                <a class="navbar-brand" href="#!">簡易會計系統</a>
+                <a class="navbar-brand" href="http://localhost:8080/mainPage">簡易會計系統</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="http://localhost:8080/mainPage">首頁</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">如何使用</a></li>
+                        <li class="nav-item"><a class="nav-link" href="http://localhost:8080/">登出</a></li>
                     </ul>
                 </div>
             </div>
@@ -55,8 +56,7 @@
             <div class="container px-lg-4">
                 <div class="p-4 p-lg-3 bg-light rounded-3 text-center">
                     <div class="m-4 m-lg-5">
-                        <h1 class="display-5 fw-bold">歡迎登入</h1>
-                        <p style="font-size: 25px;">請輸入您的帳號和密碼</p>
+                        <h1 class="display-5 fw-bold">查看產品清單</h1>
                     </div>
                 </div>
             </div>
@@ -64,27 +64,24 @@
 
         <!--Section-->
         <section class="pt-4">
-            <div class="container px-lg-4">
-
-            <form id="myForm">
-                <div class='p-4 p-lg-4'>
-                    <label for="username" class="form-label inputfont">帳號</label>
-                    <input type="text" class="form-control input-col" id="username" name="username" placeholder="請輸入帳號">
-                </div>
-                <div class="p-4 p-lg-4">
-                    <label for="password" class="form-label inputfont">密碼</label>
-                    <input type="password" class="form-control input-col" id="password" name="password" placeholder="請輸入密碼">
-                </div>  
-            </form>
-
-                <div class="p-4">
-                    <a href="http://localhost:8080/register">尚未有帳號? 按這裡註冊</a>
-                </div>
-                <div class="p-4">
-                    <button type="button" class="whitebtn" onclick="submitForm()">進入系統</button>
-                </div>
+            <div class='container px-lg-4'>
+                <table id="productTable">
+                    <thead>
+                        <tr>
+                            <th>產品編號</th>
+                            <th>產品名稱</th>
+                            <th>進貨價格(一箱飲料多少錢)</th>
+                            <th>大包裝內可賣數量(例如一箱飲料有12罐可以賣)</th>
+                            <th>販售價格(一瓶飲料多少錢)</th>
+                            <th>須提醒數量(剩下幾瓶飲料時須提醒進貨)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 這裡將由JavaScript動態生成 -->
+                    </tbody>
+                </table>
             </div>
-            
+
         </section>
 
         <!-- Footer-->
@@ -97,3 +94,4 @@
         <script src="js/scripts.js"></script>
     </body>
 </html>
+    
