@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
-import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -197,8 +195,35 @@ public class SqlManager {
 		jdbcTemplate.update(query);
 	}
 
-	
+	// 刪除進貨資料
+	public void deleteImportData(String shopID, String itemID, String importDate) {
+		String condition = String.format("shopID = '%s' AND itemID = '%s' AND importDate = '%s'", shopID, itemID, importDate);
+		delete("import", condition);
+	}
 
+	// 刪除出貨資料
+	public void deleteExportData(String shopID, String itemID, String exportDate) {
+		String condition = String.format("shopID = '%s' AND itemID = '%s' AND exportDate = '%s'", shopID, itemID, exportDate);
+		delete("export", condition);
+	}
+
+	// 刪除費用資料
+	public void deleteExpenseData(String shopID, String billID) {
+		String condition = String.format("shopID = '%s' AND billID = '%s'", shopID, billID);
+		delete("bill", condition);
+	}
+
+	// 刪除指定資料
+	public void delete(String table, String condition) {
+		String query = String.format("DELETE FROM `%s` WHERE %s", table, condition);
+
+		try {
+			jdbcTemplate.execute(query);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
     // 添加資料到指定表格
     private void addData(String table, String columns, String data) {
         String query = String.format("INSERT INTO %s (%s) VALUES (%s);", table, columns, data);
