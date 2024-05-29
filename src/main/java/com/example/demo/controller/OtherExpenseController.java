@@ -26,16 +26,17 @@ public class OtherExpenseController {
     
     User user=new User();
     
-    /*@GetMapping(value = "/otherExpense", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(value = "/otherExpense", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
         ClassPathResource resource = new ClassPathResource("static/otherExpense.html");
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
-    }*/
+    }
 
-    /*@GetMapping("/otherExpenseList")
+    @GetMapping("/otherExpenseList")
     public List<OtherExpense> getAllExpense() {
 
-        /*把其他費用那張表拉出來 
+        /*把其他費用那張表拉出來 */
+        
 
         List<OtherExpense> expenses = new ArrayList<>();
 
@@ -44,14 +45,14 @@ public class OtherExpenseController {
         expenses.add(e1);
         expenses.add(e2);
         return expenses;
-    }*/
+    }
 
-    /*@PostMapping("/addExpense")
+    @PostMapping("/addExpense")
     public void addExpense(@RequestParam("expenseDate[]") List<String> dates,
     @RequestParam("expenseType[]") List<String> types,
                             @RequestParam("expenseCost[]") List<String> costs) {
         
-        /*把這裡取到的資料丟進去DB費用表
+        /*把這裡取到的資料丟進去DB費用表*/
         addBill(shopID, types.get(0), dates.get(0), costs.get(0));
 
         for (int i = 0; i < dates.size(); i++) {
@@ -60,7 +61,7 @@ public class OtherExpenseController {
             String cost = costs.get(i);
             System.out.println("date: " + date + ", type: " + type+", cost: " + cost);
         }
-    }*/
+    }
 
     
 }
