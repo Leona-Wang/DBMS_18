@@ -42,7 +42,7 @@ public class IndexController extends SqlManager{
         
         /*這裡放判斷帳號密碼對不對的method */
         /*預設是帳號=admin，密碼是password */
-        if (/* "admin".equals(username) && "password".equals(password)*/checkSign(username,password) = true) {
+        if (/* "admin".equals(username) && "password".equals(password)*/checkSign(username,password) == true) {
             response.put("success", "true");
             response.put("message", "登入成功！");
             

@@ -40,9 +40,8 @@ public class MainPageController {
     public String serveHomePage() throws IOException {
         String username = u.username;
         ClassPathResource resource = new ClassPathResource("static/mainPage.html");
-        String htmlContent = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
-        htmlContent=htmlContent.replace("{username}", username); // 将 {username} 替换为实际的用户名
-        return htmlContent;
+        return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+        
         
     } 
     
