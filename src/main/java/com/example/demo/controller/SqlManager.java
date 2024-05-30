@@ -277,6 +277,20 @@ public class SqlManager {
         return executeQuery(query);
     }
 
+	// 獲取所有商品名稱
+    public String[] getAllItemNames() {
+        String query = String.format("SELECT itemName FROM item WHERE shopID = '%s'", this.shopID);
+        List<String> itemNames = new ArrayList<>();
+
+        jdbcTemplate.query(query, (ResultSet rs) -> {
+            while (rs.next()) {
+                itemNames.add(rs.getString("itemName"));
+            }
+            return null; // We don't need to return anything from this lambda function
+        });
+
+        return itemNames.toArray(new String[0]);
+    }
 	
 	 // 查詢所有商品
 	 public String[][] getItems() {
