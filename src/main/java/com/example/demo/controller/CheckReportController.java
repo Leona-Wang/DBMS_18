@@ -37,13 +37,16 @@ public class CheckReportController {
     public List<Inventory> showImportTable() {
         //查query的時候，日期從dates[]拿，dates[0]是起始點，dates[1]是終點
         //查完之後新建物件，把資料塞到inventory裡，可以用資料比數跑for迴圈之類的
+        string[][] str = getImportBetweenDates(date[0], date[1]);
+
         
         List<Inventory> imports = new ArrayList<>();
 
-        Inventory e1=new Inventory("0","2024-01-01","mouse","5","5000");
-        Inventory e2=new Inventory("1","2024-01-02","cow","5","10000");
-        imports.add(e1);
-        imports.add(e2);
+        for(int i ; i < str.length ; i++){
+            Inventory e = new Inventory(str[i][0], str[i][1], str[i][2], str[i][3], str[i][4]);
+            imports.add(e);
+        }
+
         return imports;
     }
 
@@ -53,11 +56,13 @@ public class CheckReportController {
         //查query的時候，日期從dates[]拿，dates[0]是起始點，dates[1]是終點
         //查完之後新建物件，把資料塞到inventory裡，可以用資料比數跑for迴圈之類的
         List<Inventory> exports = new ArrayList<>();
+        string[][] str = getExportBetweenDates(date[0], date[1]);
 
-        Inventory e1=new Inventory("0","2024-03-15","mouse","3","120");
-        Inventory e2=new Inventory("1","2024-03-25","cow","2","400");
-        exports.add(e1);
-        exports.add(e2);
+        for(int i ; i < str.length ; i++){
+            Inventory e = new Inventory(str[i][0], str[i][1], str[i][2], str[i][3], str[i][4]);
+            exports.add(e);
+        }
+
         return exports;
     }
     
@@ -67,11 +72,13 @@ public class CheckReportController {
         //查query的時候，日期從dates[]拿，dates[0]是起始點，dates[1]是終點
         //查完之後新建物件，把資料塞到otherExpense裡，可以用資料比數跑for迴圈之類的
         List<OtherExpense> expenses = new ArrayList<>();
+        string[][] str = getBillsBetweenDates(date[0], date[1]);
 
-        OtherExpense e1=new OtherExpense("0","2024-01-01","e1","500");
-        OtherExpense e2=new OtherExpense("1","2024-01-02","e2","400");
-        expenses.add(e1);
-        expenses.add(e2);
+        for(int i ; i < str.length ; i++){
+            OtherExpense e = new OtherExpense(str[i][0], str[i][1], str[i][2], str[i][3]);
+            expenses.add(e);
+        }
+
         return expenses;
     }
 
@@ -100,9 +107,13 @@ public class CheckReportController {
     @PostMapping("/getImportData")
     public void getImportData(@RequestBody RowData rowData) {
         // 处理接收到的数据
+        String id = rowData.getColumn1();
+
+
         System.out.println("Received data: " + rowData.toString());
         System.out.println("good");
         // 进行后续操作
+
     }
 
     @PostMapping("/deleteImportData")
@@ -111,6 +122,7 @@ public class CheckReportController {
         System.out.println("Received data: " + rowData.toString());
         System.out.println("good");
         // 进行后续操作
+        deleteImportData(rowData.getColumn1(), rowData.getColumn2());
     }
 
     @PostMapping("/getExportData")
@@ -127,6 +139,7 @@ public class CheckReportController {
         System.out.println("Received data: " + rowData.toString());
         System.out.println("good");
         // 进行后续操作
+        deleteExportData(rowData.getColumn1(), rowData.getColumn2());
     }
 
     @PostMapping("/getExpenseData")
@@ -143,6 +156,7 @@ public class CheckReportController {
         System.out.println("Received data: " + expenseData.toString());
         System.out.println("good");
         // 进行后续操作
+        deleteExpenseData(expenseData.getColumn1(), expenseData.getColumn2());
     }
 
 
