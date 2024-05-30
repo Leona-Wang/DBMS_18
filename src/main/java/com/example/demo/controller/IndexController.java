@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class IndexController {
+public class IndexController extends SqlManager{
     
     User user=new User();
     
@@ -42,7 +42,7 @@ public class IndexController {
         
         /*這裡放判斷帳號密碼對不對的method */
         /*預設是帳號=admin，密碼是password */
-        if ("admin".equals(username) && "password".equals(password)) {
+        if (/* "admin".equals(username) && "password".equals(password)*/checkSign(username,password) = true) {
             response.put("success", "true");
             response.put("message", "登入成功！");
             

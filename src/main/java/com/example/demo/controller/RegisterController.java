@@ -39,8 +39,8 @@ public class RegisterController extends SqlManager{
         /*現在預設是送出後會直接進系統，可以改 */
         
         String userData = "註冊Username: " + username + ", Password: " + password;
-       //幫我填parameter
-        //enroll(username,password);
+       
+        enroll(username,password);
         System.out.println(userData);
 
         

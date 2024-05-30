@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AddProductController {
+public class AddProductController extends SqlManager{
     
     @GetMapping(value = "/addProduct", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
@@ -38,6 +38,7 @@ public class AddProductController {
     @RequestParam("productAlertNumber[]") List<String> productAlertNumber) {
         
         /*把這裡取到的資料丟進去DB費用表*/
+        addItem(shopID,productName,productUnitPerBox,productImportPrice,productExportUnitPrice,productAlertNumber)
 
         System.out.println("productName: " + productName + 
         "\nproductImportPrice: " + productImportPrice+
