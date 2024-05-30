@@ -38,7 +38,7 @@ public class AddProductController extends SqlManager{
     @RequestParam("productAlertNumber[]") List<String> productAlertNumber) {
         
         /*把這裡取到的資料丟進去DB費用表*/
-        addItem(shopID,productName,productUnitPerBox,productImportPrice,productExportUnitPrice,productAlertNumber)
+        addItem(productName.get(0),productUnitPerBox.get(0),productImportPrice.get(0),productExportUnitPrice.get(0),productAlertNumber.get(0));
 
         System.out.println("productName: " + productName + 
         "\nproductImportPrice: " + productImportPrice+

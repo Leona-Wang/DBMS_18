@@ -36,8 +36,8 @@ public class AddInventoryController extends SqlManager{
     @RequestParam("importBoxNum[]") List<String> importBoxNum) {
         
         /*把這裡取到的資料丟進去DB費用表*/
-        addInventory(importName, importBoxNum);
-        addImport(importName,importBoxNum,LocalDate.now())
+        addInventory(importName.get(0), importBoxNum.get(0));
+        addImport(importName.get(0),importBoxNum.get(0),LocalDate.now().toString());
         System.out.println("importName: " + importName + 
         "\nimportBoxNum: " +importBoxNum);
 

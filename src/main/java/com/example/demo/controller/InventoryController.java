@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class InventoryController extends SqlManager{
     
-    User user=new User();
+    /*User user=new User();
     
     @GetMapping(value = "/inventory", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
@@ -56,7 +56,7 @@ public class InventoryController extends SqlManager{
     @ResponseBody
     public void addProductList(@RequestParam("productName[]") String[] productNames, @RequestParam("productPrice[]") String[] productPrices) {
         
-        /*把這裡取到的資料塞到DB商品清單去 */
+        /*把這裡取到的資料塞到DB商品清單去 
         
         StringBuilder result = new StringBuilder("Received data:");
         
@@ -110,7 +110,7 @@ public class InventoryController extends SqlManager{
             updateInventory(option, Integer.parseInt(box));
             System.out.println("Option: " + option + ", Pack: " + box);
         }
-    }
+    }*/
 
 }
 

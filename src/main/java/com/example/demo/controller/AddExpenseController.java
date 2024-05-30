@@ -37,7 +37,7 @@ public class AddExpenseController {
     @RequestParam("expenseDate") List<String> expenseDate) {
         
         /*把這裡取到的資料丟進去DB費用表*/
-        addBill(UUID.randomUUID().toString(), expenseType.get(0),  expenseDate.get(0), expenseCost.get(0))
+        //addBill(UUID.randomUUID().toString(), expenseType.get(0),  expenseDate.get(0), expenseCost.get(0))
         
 
         System.out.println("expenseType: " + expenseType + 
