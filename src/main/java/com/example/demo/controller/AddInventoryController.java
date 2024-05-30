@@ -20,9 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import java.time.LocalDate;
 
 @RestController
-public class AddInventoryController {
+public class AddInventoryController extends SqlManager{
     
     @GetMapping(value = "/addInventory", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
@@ -35,7 +36,8 @@ public class AddInventoryController {
     @RequestParam("importBoxNum[]") List<String> importBoxNum) {
         
         /*把這裡取到的資料丟進去DB費用表*/
-
+        addInventory(importName, importBoxNum);
+        addImport(importName,importBoxNum,LocalDate.now())
         System.out.println("importName: " + importName + 
         "\nimportBoxNum: " +importBoxNum);
 
@@ -48,7 +50,10 @@ public class AddInventoryController {
     public List<String> getDropdownOptions() {
         
         /*把商品清單項目名稱拉出來，當成新增銷售存貨的選擇項目 */
-        return Arrays.asList("mouse", "cow");
+        
+        
+        String[] ain = getAllItemNames();
+        return Arrays.asList(Arrays.toString(ain));
     }
     
 }
