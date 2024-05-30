@@ -164,6 +164,17 @@ public class SqlManager {
 		String[][] result = search("remainAmount", "inventory", String.format("shopID = '%s' AND itemID = '%s'", this.shopID, itemID));
 		return (result != null && result.length > 0 && result[0].length > 0) ? Integer.parseInt(result[0][0]) : 0;
 	}
+
+	// 獲取指定商店的所有帳單數據
+    public String[][] getBillData() {
+        String query = String.format(
+            "SELECT b.shopID, b.billID, bi.billName, bi.occurDate, bi.cost " +
+            "FROM bill b " +
+            "LEFT JOIN bill_info bi ON b.billID = bi.billID " +
+            "WHERE b.shopID = '%s'", this.shopID
+        );
+        return executeQuery(query);
+    }
 	
 	// 更新商品表格的指定列
 	public void updateItemColumn(String itemID, String columnName, String newValue) {
