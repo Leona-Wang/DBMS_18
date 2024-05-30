@@ -20,7 +20,11 @@ public class SqlManager {
         System.out.println("MySQL Connection Success \n");
     }
 
-     // 註冊商店
+	public String getShop(){
+		return this.shopID;
+	}
+
+    // 註冊商店
     public void enroll(String shopName, String password) {
         String[][] result = checkShopName(shopName);
         if (result != null && result.length > 0) {
