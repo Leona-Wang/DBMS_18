@@ -241,6 +241,18 @@ public class SqlManager {
 		return results.toArray(new String[0][0]);
 	}
 
+	 // 根據日期查詢進口資料
+	 public String[][] getImportByDate(String date) {
+        String query = String.format("SELECT * FROM import WHERE importDate = '%s'", date);
+        return executeQuery(query);
+    }
+
+    // 根據日期查詢出口資料
+    public String[][] getExportByDate(String date) {
+        String query = String.format("SELECT * FROM export WHERE exportDate = '%s'", date);
+        return executeQuery(query);
+    }
+	
 	// 查詢出口數據
 	public String[][] getExportData() {
 		String query = String.format(
