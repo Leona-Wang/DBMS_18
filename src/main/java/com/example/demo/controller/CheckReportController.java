@@ -42,7 +42,7 @@ public class CheckReportController {
         
         List<Inventory> imports = new ArrayList<>();
 
-        for(int i ; i < str.length ; i++){
+        for(int i=0 ; i < str.length ; i++){
             Inventory e = new Inventory(str[i][0], str[i][1], str[i][2], str[i][3], str[i][4]);
             imports.add(e);
         }
@@ -58,7 +58,7 @@ public class CheckReportController {
         List<Inventory> exports = new ArrayList<>();
         string[][] str = getExportBetweenDates(date[0], date[1]);
 
-        for(int i ; i < str.length ; i++){
+        for(int i=0 ; i < str.length ; i++){
             Inventory e = new Inventory(str[i][0], str[i][1], str[i][2], str[i][3], str[i][4]);
             exports.add(e);
         }
@@ -74,7 +74,7 @@ public class CheckReportController {
         List<OtherExpense> expenses = new ArrayList<>();
         string[][] str = getBillsBetweenDates(date[0], date[1]);
 
-        for(int i ; i < str.length ; i++){
+        for(int i=0 ; i < str.length ; i++){
             OtherExpense e = new OtherExpense(str[i][0], str[i][1], str[i][2], str[i][3]);
             expenses.add(e);
         }
@@ -108,11 +108,13 @@ public class CheckReportController {
     public void getImportData(@RequestBody RowData rowData) {
         // 处理接收到的数据
         String id = rowData.getColumn1();
-
+        int amount = Integer.parseInt(rowData.getColumn4());
 
         System.out.println("Received data: " + rowData.toString());
         System.out.println("good");
+
         // 进行后续操作
+        updateImportAmount(id, amount);
 
     }
 
@@ -128,9 +130,14 @@ public class CheckReportController {
     @PostMapping("/getExportData")
     public void getExportData(@RequestBody RowData rowData) {
         // 处理接收到的数据
+        String id = rowData.getColumn1();
+        String amount = Integer.parseInt(rowData.getColumn4());
+
         System.out.println("Received data: " + rowData.toString());
         System.out.println("good");
+
         // 进行后续操作
+        updateExportAmount(id, amount);
     }
 
     @PostMapping("/deleteExportData")
@@ -145,9 +152,13 @@ public class CheckReportController {
     @PostMapping("/getExpenseData")
     public void getExpenseData(@RequestBody ExpenseData expenseData) {
         // 处理接收到的数据
+        String id = expenseData.getColumn1();
+        String cost = expenseData.getColumn4();
+
         System.out.println("Received data: " + expenseData.toString());
         System.out.println("good");
         // 进行后续操作
+        updateBillInfoColumn(id, "cost", cost);
     }
 
     @PostMapping("/deleteExpenseData")
