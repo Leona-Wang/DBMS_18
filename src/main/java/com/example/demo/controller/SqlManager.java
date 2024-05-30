@@ -71,16 +71,17 @@ public class SqlManager {
     }
 
 	// 根據指定日期查詢帳單
-	public String[][] getBillsByDate(String date) {
-		String query = String.format(
-			"SELECT b.shopID, b.billID, bi.billName, bi.occurDate, bi.cost " +
-			"FROM bill b " +
-			"LEFT JOIN bill_info bi ON b.billID = bi.billID " +
-			"WHERE bi.occurDate = '%s'", 
-			date
-		);
-		return executeQuery(query);
-	}
+	public String[][] getBillsBetweenDates(String startDate, String endDate) {
+        String query = String.format(
+            "SELECT b.shopID, b.billID, bi.billName, bi.occurDate, bi.cost " +
+            "FROM bill b " +
+            "LEFT JOIN bill_info bi ON b.billID = bi.billID " +
+            "WHERE bi.occurDate BETWEEN '%s' AND '%s'", 
+            startDate,
+            endDate
+        );
+        return executeQuery(query);
+    }
 
 	/*這個是bill的取出方式
 	 *  String[][] result = sql.getBillsByMonth(5);
@@ -241,18 +242,6 @@ public class SqlManager {
 		return results.toArray(new String[0][0]);
 	}
 
-	 // 根據日期查詢進口資料
-	 public String[][] getImportByDate(String date) {
-        String query = String.format("SELECT * FROM import WHERE importDate = '%s'", date);
-        return executeQuery(query);
-    }
-
-    // 根據日期查詢出口資料
-    public String[][] getExportByDate(String date) {
-        String query = String.format("SELECT * FROM export WHERE exportDate = '%s'", date);
-        return executeQuery(query);
-    }
-	
 	// 查詢出口數據
 	public String[][] getExportData() {
 		String query = String.format(
@@ -276,6 +265,19 @@ public class SqlManager {
 		return results.toArray(new String[0][0]);
 	}
 
+	// 根據日期範圍查詢進口資料
+    public String[][] getImportBetweenDates(String startDate, String endDate) {
+        String query = String.format("SELECT * FROM import WHERE importDate BETWEEN '%s' AND '%s'", startDate, endDate);
+        return executeQuery(query);
+    }
+
+    // 根據日期範圍查詢出口資料
+    public String[][] getExportBetweenDates(String startDate, String endDate) {
+        String query = String.format("SELECT * FROM export WHERE exportDate BETWEEN '%s' AND '%s'", startDate, endDate);
+        return executeQuery(query);
+    }
+
+	
 	 // 查詢所有商品
 	 public String[][] getItems() {
         String query = "SELECT * FROM item";
