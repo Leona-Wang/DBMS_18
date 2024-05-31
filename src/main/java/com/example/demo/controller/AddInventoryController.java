@@ -53,11 +53,21 @@ public class AddInventoryController extends SqlManager{
         
         
         String[] ain = getAllItemNames();
-        return Arrays.asList(Arrays.toString(ain));
+        /*StringBuilder output = new StringBuilder();
+
+        for (int i = 0; i < ain.length; i++) {
+            output.append("\"").append(ain[i]).append("\"");
+            if (i < ain.length - 1) {
+                output.append(",");
+            }
+        }*/
+        
+        String result = String.join(", ", ain);
+        return Arrays.asList(result);
     }
     
 }
-
+    
 
 
 

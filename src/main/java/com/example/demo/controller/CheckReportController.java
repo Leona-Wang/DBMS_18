@@ -43,7 +43,7 @@ public class CheckReportController {
         List<Inventory> imports = new ArrayList<>();
 
         for(int i=0 ; i < str.length ; i++){
-            Inventory e = new Inventory(str[i][0], str[i][1], str[i][2], str[i][3], str[i][4]);
+            //Inventory e = new Inventory(str[i][1], str[i][3], str[i][2], str[i][2], str[i][4]);
             imports.add(e);
         }
 
@@ -59,7 +59,7 @@ public class CheckReportController {
         string[][] str = getExportBetweenDates(date[0], date[1]);
 
         for(int i=0 ; i < str.length ; i++){
-            Inventory e = new Inventory(str[i][0], str[i][1], str[i][2], str[i][3], str[i][4]);
+            //Inventory e = new Inventory(str[i][0], str[i][1], str[i][2], str[i][3], str[i][4]);
             exports.add(e);
         }
 
@@ -167,7 +167,7 @@ public class CheckReportController {
         System.out.println("Received data: " + expenseData.toString());
         System.out.println("good");
         // 进行后续操作
-        deleteExpenseData(expenseData.getColumn1(), expenseData.getColumn2());
+        deleteExpenseData(expenseData.getColumn1());
     }
 
 
