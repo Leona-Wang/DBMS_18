@@ -3,7 +3,9 @@ package com.example.demo.controller;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -136,7 +138,53 @@ public class SqlManager {
 		List<String> results = jdbcTemplate.query(query, (rs, rowNum) -> rs.getString("itemID"));
 		return results.isEmpty() ? null : results.get(0);
 	}
-	
+
+	 // 獲取指定日期範圍內的出口總量
+    public String getTotalAmountOfExportBetweenDates(String startDate, String endDate) {
+        String query = String.format(
+            "SELECT shopID, SUM(exportAmount) AS totalExportAmount " +
+            "FROM export " +
+            "WHERE shopID = '%s' AND exportDate BETWEEN '%s' AND '%s' " +
+            "GROUP BY shopID", this.shopID, startDate, endDate
+        );
+        return convertToString(executeQuery(query));
+    }
+
+	// 根據日期範圍計算出口的總成本
+	public String getTotalCostOfExportBetweenDates(String startDate, String endDate) {
+		String query = String.format(
+			"SELECT SUM(it.sellingPricePerUnit * e.exportAmount) AS totalCost " +
+			"FROM export e " +
+			"LEFT JOIN item it ON e.itemID = it.itemID " +
+			"WHERE e.shopID = '%s' AND e.exportDate BETWEEN '%s' AND '%s'",
+			this.shopID, startDate, endDate
+		);
+		String[][] result = executeQuery(query);
+		return result.length > 0 ? result[0][0] : "0";
+	}
+
+	// 根據日期範圍計算進口的總收入
+	public String getTotalRevenueOfImportBetweenDates(String startDate, String endDate) {
+		String query = String.format(
+			"SELECT SUM(it.importPrice * im.importAmount) AS totalRevenue " +
+			"FROM import im " +
+			"LEFT JOIN item it ON im.itemID = it.itemID " +
+			"WHERE im.shopID = '%s' AND im.importDate BETWEEN '%s' AND '%s'",
+			this.shopID, startDate, endDate
+		);
+		String[][] result = executeQuery(query);
+		return result.length > 0 ? result[0][0] : "0";
+	}
+
+
+    // 將查詢結果轉換為字符串
+    private String convertToString(String[][] queryResults) {
+        return queryResults != null ? 
+               Arrays.stream(queryResults)
+                     .map(row -> String.join(",", row))
+                     .collect(Collectors.joining("\n")) : "";
+    }
+
 	// 新增出口
 	public void addExport(String itemID, String exportAmount, String exportDate) {
 		String table = "export";
@@ -176,6 +224,18 @@ public class SqlManager {
         return executeQuery(query);
     }
 	
+	// 根據 itemID 查詢商品名稱
+	public String getItemNameById(String itemID) {
+		String query = String.format(
+			"SELECT itemName " +
+			"FROM item " +
+			"WHERE shopID = '%s' AND itemID = '%s'", 
+			this.shopID, itemID
+		);
+		return convertToString(executeQuery(query));
+	}
+
+
 	// 更新商品表格的指定列
 	public void updateItemColumn(String itemID, String columnName, String newValue) {
 		String query = String.format("UPDATE item SET %s = '%s' WHERE itemID = '%s'", columnName, newValue, itemID);
@@ -276,17 +336,30 @@ public class SqlManager {
 		return results.toArray(new String[0][0]);
 	}
 
-	// 根據日期範圍查詢進口資料
-    public String[][] getImportBetweenDates(String startDate, String endDate) {
-        String query = String.format("SELECT * FROM import WHERE importDate BETWEEN '%s' AND '%s'", startDate, endDate);
-        return executeQuery(query);
-    }
+	// 根據日期範圍查詢進口數據
+	public String[][] getImportByDate(String startDate, String endDate) {
+		String query = String.format(
+			"SELECT i.shopID, im.importDate, it.itemName, im.importAmount, (it.importPrice * im.importAmount) AS totalCost " +
+			"FROM import im " +
+			"LEFT JOIN item it ON im.itemID = it.itemID " +
+			"WHERE im.shopID = '%s' AND im.importDate BETWEEN '%s' AND '%s'", 
+			this.shopID, startDate, endDate
+		);
+		return executeQuery(query);
+	}
 
-    // 根據日期範圍查詢出口資料
-    public String[][] getExportBetweenDates(String startDate, String endDate) {
-        String query = String.format("SELECT * FROM export WHERE exportDate BETWEEN '%s' AND '%s'", startDate, endDate);
-        return executeQuery(query);
-    }
+	// 根據日期範圍查詢出口數據
+	public String[][] getExportByDate(String startDate, String endDate) {
+		String query = String.format(
+			"SELECT e.shopID, e.exportDate, it.itemName, e.exportAmount, (it.sellingPricePerUnit * e.exportAmount) AS totalRevenue " +
+			"FROM export e " +
+			"LEFT JOIN item it ON e.itemID = it.itemID " +
+			"WHERE e.shopID = '%s' AND e.exportDate BETWEEN '%s' AND '%s'", 
+			this.shopID, startDate, endDate
+		);
+		return executeQuery(query);
+	}
+
 
 	// 獲取所有商品名稱
     public String[] getAllItemNames() {
