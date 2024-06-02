@@ -41,7 +41,7 @@ public class ExpenseListController {
         List<OtherExpense> expenses = new ArrayList<>();
         String [][] billData = getBillData();
         for(int i = 0 ; i<billData.length ; i++){
-            OtherExpense OtherExpense = new OtherExpense(billData[i][1], billData[i][3], billData[i][2], billData[i][4]);  
+            OtherExpense e = new OtherExpense(billData[i][1], billData[i][3], billData[i][2], billData[i][4]);  //id, date, type, cost
             expenses.add(e);
         }
         return expenses;
