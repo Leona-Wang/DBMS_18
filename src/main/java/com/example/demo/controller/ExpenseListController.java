@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ExpenseListController {
+public class ExpenseListController extends SqlManager{
     
     @GetMapping(value = "/expenseList", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
@@ -48,7 +48,3 @@ public class ExpenseListController {
     }
     
 }
-
-
-
-
