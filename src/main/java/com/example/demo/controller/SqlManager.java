@@ -17,7 +17,7 @@ public class SqlManager {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public static String shopID = "";
+    public  String shopID = "";
 
     @PostConstruct
     public void init() {
