@@ -1,4 +1,3 @@
-
 function submitForm() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
@@ -7,7 +6,7 @@ function submitForm() {
     data.append('username', username);
     data.append('password', password);
 
-    fetch('/', {
+    fetch('/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -15,7 +14,7 @@ function submitForm() {
         body: data
     }).then(response => response.json())
         .then(data => {
-            if (data.success) {
+            if (data.success === "true") {
                 alert(data.message);
                 window.location.href = "http://localhost:8080/mainPage";
             } else {

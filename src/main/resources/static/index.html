@@ -9,10 +9,9 @@
         <script src="static/js/indexControll.js"></script>
 
         <style type="text/css">
-
             .whitebtn {
                 background-color: white;
-                border-color:gray;
+                border-color: gray;
                 border-radius: 5px;
                 padding-top: 8px;
                 padding-bottom: 8px;
@@ -20,14 +19,13 @@
                 padding-right: 16px;
             }
 
-            .inputfont{
+            .inputfont {
                 font-size: 30px;
             }
 
-            .input-col{
+            .input-col {
                 height: 50px;
             }
-
         </style>
 
         <!-- Favicon-->
@@ -65,17 +63,16 @@
         <!--Section-->
         <section class="pt-4">
             <div class="container px-lg-4">
-
-            <form id="myForm">
-                <div class='p-4 p-lg-4'>
-                    <label for="username" class="form-label inputfont">帳號</label>
-                    <input type="text" class="form-control input-col" id="username" name="username" placeholder="請輸入帳號">
-                </div>
-                <div class="p-4 p-lg-4">
-                    <label for="password" class="form-label inputfont">密碼</label>
-                    <input type="password" class="form-control input-col" id="password" name="password" placeholder="請輸入密碼">
-                </div>  
-            </form>
+                <form id="myForm" action="/login" method="post">
+                    <div class='p-4 p-lg-4'>
+                        <label for="username" class="form-label inputfont">帳號</label>
+                        <input type="text" class="form-control input-col" id="username" name="username" placeholder="請輸入帳號">
+                    </div>
+                    <div class="p-4 p-lg-4">
+                        <label for="password" class="form-label inputfont">密碼</label>
+                        <input type="password" class="form-control input-col" id="password" name="password" placeholder="請輸入密碼">
+                    </div>  
+                </form>
 
                 <div class="p-4">
                     <a href="http://localhost:8080/register">尚未有帳號? 按這裡註冊</a>
@@ -84,7 +81,6 @@
                     <button type="button" class="whitebtn" onclick="submitForm()">進入系統</button>
                 </div>
             </div>
-            
         </section>
 
         <!-- Footer-->
