@@ -53,7 +53,7 @@ public class SqlManager {
 
             if (standard.equals(password)) {
                 correct = true;
-                this.shopID = result[0][0];
+                SqlManager.shopID = result[0][0];
             }
         }
 
@@ -102,7 +102,7 @@ public class SqlManager {
 	public void addBill(String billName, String occurDate, String cost) {
 		// 在 bill 表格中插入帳單資訊
 		String billInsertQuery = "INSERT INTO bill (shopID) VALUES (?)";
-		jdbcTemplate.update(billInsertQuery, this.shopID);
+		jdbcTemplate.update(billInsertQuery, SqlManager.shopID);
 	
 		// 獲取剛插入的帳單的 billID
 		String getBillIDQuery = "SELECT LAST_INSERT_ID()";
@@ -120,7 +120,7 @@ public class SqlManager {
 	public void addImport(String itemID, String importAmount, String importDate) {
 		String table = "import";
 		String columns = "shopID, itemID, importAmount, importDate";
-		String data = String.format("%s, %s, %d, '%s'", this.shopID, itemID, importAmount, importDate);
+		String data = String.format("%s, %s, %d, '%s'", SqlManager.shopID, itemID, importAmount, importDate);
 		addData(table, columns, data);
 	}
 	
@@ -128,7 +128,7 @@ public class SqlManager {
 	public void addItem(String itemName, String unitPerBox, String importPrice, String sellingPricePerUnit, String alertAmount) {
 		String table = "item";
 		String columns = "shopID, itemName, unitPerBox, importPrice, sellingPricePerUnit, alertAmount";
-		String data = String.format("'%s','%s', %d, %d, %d, %d", this.shopID, itemName, Integer.parseInt(unitPerBox), Integer.parseInt(importPrice), Integer.parseInt(sellingPricePerUnit), Integer.parseInt(alertAmount));
+		String data = String.format("'%s','%s', %d, %d, %d, %d", SqlManager.shopID, itemName, Integer.parseInt(unitPerBox), Integer.parseInt(importPrice), Integer.parseInt(sellingPricePerUnit), Integer.parseInt(alertAmount));
 		addData(table, columns, data);
 	}
 	
@@ -145,7 +145,7 @@ public class SqlManager {
             "SELECT shopID, SUM(exportAmount) AS totalExportAmount " +
             "FROM export " +
             "WHERE shopID = '%s' AND exportDate BETWEEN '%s' AND '%s' " +
-            "GROUP BY shopID", this.shopID, startDate, endDate
+            "GROUP BY shopID", SqlManager.shopID, startDate, endDate
         );
         return convertToString(executeQuery(query));
     }
@@ -157,7 +157,7 @@ public class SqlManager {
 			"FROM export e " +
 			"LEFT JOIN item it ON e.itemID = it.itemID " +
 			"WHERE e.shopID = '%s' AND e.exportDate BETWEEN '%s' AND '%s'",
-			this.shopID, startDate, endDate
+			SqlManager.shopID, startDate, endDate
 		);
 		String[][] result = executeQuery(query);
 		return result.length > 0 ? result[0][0] : "0";
@@ -170,7 +170,7 @@ public class SqlManager {
 			"FROM import im " +
 			"LEFT JOIN item it ON im.itemID = it.itemID " +
 			"WHERE im.shopID = '%s' AND im.importDate BETWEEN '%s' AND '%s'",
-			this.shopID, startDate, endDate
+			SqlManager.shopID, startDate, endDate
 		);
 		String[][] result = executeQuery(query);
 		return result.length > 0 ? result[0][0] : "0";
@@ -189,7 +189,7 @@ public class SqlManager {
 	public void addExport(String itemID, String exportAmount, String exportDate) {
 		String table = "export";
 		String columns = "shopID, itemID, exportAmount, exportDate";
-		String data = String.format("'%s', '%s', %d, '%s'", this.shopID, itemID, Integer.parseInt(exportAmount), exportDate);
+		String data = String.format("'%s', '%s', %d, '%s'", SqlManager.shopID, itemID, Integer.parseInt(exportAmount), exportDate);
 		addData(table, columns, data);
 	}
 	
@@ -197,19 +197,19 @@ public class SqlManager {
 	public void addInventory(String itemID, String remainAmount) {
 		String table = "inventory";
 		String columns = "shopID, itemID, remainAmount";
-		String data = String.format("'%s', '%s', %d", this.shopID, itemID, Integer.parseInt(remainAmount));
+		String data = String.format("'%s', '%s', %d", SqlManager.shopID, itemID, Integer.parseInt(remainAmount));
 		addData(table, columns, data);
 	}
 	
 	// 更新庫存
 	public void updateInventory(String itemID, String newAmount) {
-		String query = String.format("UPDATE inventory SET remainAmount = %d WHERE shopID = '%s' AND itemID = '%s'", Integer.parseInt(newAmount), this.shopID, itemID);
+		String query = String.format("UPDATE inventory SET remainAmount = %d WHERE shopID = '%s' AND itemID = '%s'", Integer.parseInt(newAmount), SqlManager.shopID, itemID);
 		jdbcTemplate.update(query);
 	}
 	
 	// 獲取庫存量
 	public int getInventoryAmount(String itemID) {
-		String[][] result = search("remainAmount", "inventory", String.format("shopID = '%s' AND itemID = '%s'", this.shopID, itemID));
+		String[][] result = search("remainAmount", "inventory", String.format("shopID = '%s' AND itemID = '%s'", SqlManager.shopID, itemID));
 		return (result != null && result.length > 0 && result[0].length > 0) ? Integer.parseInt(result[0][0]) : 0;
 	}
 
@@ -219,7 +219,7 @@ public class SqlManager {
             "SELECT b.shopID, b.billID, bi.billName, bi.occurDate, bi.cost " +
             "FROM bill b " +
             "LEFT JOIN bill_info bi ON b.billID = bi.billID " +
-            "WHERE b.shopID = '%s'", this.shopID
+            "WHERE b.shopID = '%s'", SqlManager.shopID
         );
         return executeQuery(query);
     }
@@ -230,7 +230,7 @@ public class SqlManager {
 			"SELECT itemName " +
 			"FROM item " +
 			"WHERE shopID = '%s' AND itemID = '%s'", 
-			this.shopID, itemID
+			SqlManager.shopID, itemID
 		);
 		return convertToString(executeQuery(query));
 	}
@@ -244,13 +244,13 @@ public class SqlManager {
 	
 	// 更新店鋪表格的指定列
 	public void updateShopColumn(String columnName, String newValue) {
-		String query = String.format("UPDATE shop SET %s = '%s' WHERE shopID = '%s'", columnName, newValue, this.shopID);
+		String query = String.format("UPDATE shop SET %s = '%s' WHERE shopID = '%s'", columnName, newValue, SqlManager.shopID);
 		jdbcTemplate.update(query);
 	}
 	
 	// 更新帳單表格的指定列
 	public void updateBillColumn(String billID, String columnName, String newValue) {
-		String query = String.format("UPDATE bill SET %s = '%s' WHERE shopID = '%s' AND billID = '%s'", columnName, newValue, this.shopID, billID);
+		String query = String.format("UPDATE bill SET %s = '%s' WHERE shopID = '%s' AND billID = '%s'", columnName, newValue, SqlManager.shopID, billID);
 		jdbcTemplate.update(query);
 	}
 	
@@ -262,31 +262,31 @@ public class SqlManager {
 
 	// 更新出口表格的出口數量
 	public void updateExportAmount(String itemID, int newExportAmount) {
-		String query = String.format("UPDATE export SET exportAmount = %d WHERE shopID = '%s' AND itemID = '%s'", newExportAmount, this.shopID, itemID);
+		String query = String.format("UPDATE export SET exportAmount = %d WHERE shopID = '%s' AND itemID = '%s'", newExportAmount, SqlManager.shopID, itemID);
 		jdbcTemplate.update(query);
 	}
 
 	// 更新進口表格的進口數量
 	public void updateImportAmount(String itemID, int newImportAmount) {
-		String query = String.format("UPDATE import SET importAmount = %d WHERE shopID = '%s' AND itemID = '%s'", newImportAmount, this.shopID, itemID);
+		String query = String.format("UPDATE import SET importAmount = %d WHERE shopID = '%s' AND itemID = '%s'", newImportAmount, SqlManager.shopID, itemID);
 		jdbcTemplate.update(query);
 	}
 
 	// 刪除進貨資料
 	public void deleteImportData(String itemID, String importDate) {
-		String condition = String.format("shopID = '%s' AND itemID = '%s' AND importDate = '%s'",this.shopID, itemID, importDate);
+		String condition = String.format("shopID = '%s' AND itemID = '%s' AND importDate = '%s'",SqlManager.shopID, itemID, importDate);
 		delete("import", condition);
 	}
 
 	// 刪除出貨資料
 	public void deleteExportData(String itemID, String exportDate) {
-		String condition = String.format("shopID = '%s' AND itemID = '%s' AND exportDate = '%s'", this.shopID, itemID, exportDate);
+		String condition = String.format("shopID = '%s' AND itemID = '%s' AND exportDate = '%s'", SqlManager.shopID, itemID, exportDate);
 		delete("export", condition);
 	}
 
 	// 刪除費用資料
 	public void deleteExpenseData(String billID) {
-		String condition = String.format("shopID = '%s' AND billID = '%s'", this.shopID, billID);
+		String condition = String.format("shopID = '%s' AND billID = '%s'", SqlManager.shopID, billID);
 		delete("bill", condition);
 	}
 
@@ -294,7 +294,7 @@ public class SqlManager {
 	public String[][] getImportData() {
 		String query = String.format(
 			"SELECT shopID, itemID, importAmount, importDate FROM import WHERE shopID = '%s'", 
-			this.shopID
+			SqlManager.shopID
 		);
 
 		List<String[]> results = jdbcTemplate.query(query, (ResultSet rs) -> {
@@ -317,7 +317,7 @@ public class SqlManager {
 	public String[][] getExportData() {
 		String query = String.format(
 			"SELECT shopID, itemID, exportAmount, exportDate FROM export WHERE shopID = '%s'", 
-			this.shopID
+			SqlManager.shopID
 		);
 
 		List<String[]> results = jdbcTemplate.query(query, (ResultSet rs) -> {
@@ -343,7 +343,7 @@ public class SqlManager {
 			"FROM import im " +
 			"LEFT JOIN item it ON im.itemID = it.itemID " +
 			"WHERE im.shopID = '%s' AND im.importDate BETWEEN '%s' AND '%s'", 
-			this.shopID, startDate, endDate
+			SqlManager.shopID, startDate, endDate
 		);
 		return executeQuery(query);
 	}
@@ -355,7 +355,7 @@ public class SqlManager {
 			"FROM export e " +
 			"LEFT JOIN item it ON e.itemID = it.itemID " +
 			"WHERE e.shopID = '%s' AND e.exportDate BETWEEN '%s' AND '%s'", 
-			this.shopID, startDate, endDate
+			SqlManager.shopID, startDate, endDate
 		);
 		return executeQuery(query);
 	}
@@ -363,7 +363,7 @@ public class SqlManager {
 
 	// 獲取所有商品名稱
     public String[] getAllItemNames() {
-        String query = String.format("SELECT itemName FROM item WHERE shopID = '%s'", this.shopID);
+        String query = String.format("SELECT itemName FROM item WHERE shopID = '%s'", SqlManager.shopID);
         List<String> itemNames = new ArrayList<>();
 
         jdbcTemplate.query(query, (ResultSet rs) -> {
