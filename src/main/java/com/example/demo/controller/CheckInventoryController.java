@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -55,13 +56,20 @@ public class CheckInventoryController extends SqlManager{
         /*把這裡取到的資料丟進去DB費用表*/
 
         for (int i=0;i<productIndex.size();i++){
+            
             String newProductIndex = productIndex.get(i).replace("[", "").replace("]", "");
             
             String newProductName = productName.get(i).replace("[", "").replace("]", "");
             String newInventoryAmount = inventoryAmount.get(i).replace("[", "").replace("]", "");
-           
+            
+            int prevAmount=getInventoryAmount(newProductIndex);
+            int sellAmount=prevAmount-Integer.parseInt(newInventoryAmount);
             System.out.println("index:"+newProductIndex+"\nproductName:"+newInventoryAmount+"\ninventoryAmount:"+newInventoryAmount);
             updateInventory(newProductIndex, newInventoryAmount);
+
+            if (sellAmount!=0){
+                addExport(newProductIndex, sellAmount+"", LocalDate.now().toString());
+            }
             
         }
 

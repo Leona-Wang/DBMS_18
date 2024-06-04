@@ -104,7 +104,7 @@ public class SqlManager {
 	public void addBill(String billName, String occurDate, String cost) {
 		// 在 bill 表格中插入帳單資訊
 		String billInsertQuery = "INSERT INTO bill (shopID) VALUES (?)";
-		jdbcTemplate.update(billInsertQuery, SqlManager.shopID);
+		jdbcTemplate.update(billInsertQuery, Integer.parseInt(SqlManager.shopID));
 	
 		// 獲取剛插入的帳單的 billID
 		String getBillIDQuery = "SELECT LAST_INSERT_ID()";
@@ -113,7 +113,7 @@ public class SqlManager {
 	
 		// 在 bill_info 表格中插入帳單資訊
 		String billInfoInsertQuery = "INSERT INTO bill_info (billID, billName, occurDate, cost) VALUES (?, ?, ?, ?)";
-		jdbcTemplate.update(billInfoInsertQuery, billID, billName, occurDate, cost);
+		jdbcTemplate.update(billInfoInsertQuery, billID, billName, occurDate, Integer.parseInt(cost));
 	
 		System.out.println("帳單添加成功！");
 	}
@@ -192,7 +192,7 @@ public class SqlManager {
 	public void addExport(String itemID, String exportAmount, String exportDate) {
 		String table = "export";
 		String columns = "shopID, itemID, exportAmount, exportDate";
-		String data = String.format("'%s', '%s', %d, '%s'", SqlManager.shopID, itemID, Integer.parseInt(exportAmount), exportDate);
+		String data = String.format("%d, %d, %d, '%s'", Integer.parseInt(SqlManager.shopID), Integer.parseInt(itemID), Integer.parseInt(exportAmount), exportDate);
 		addData(table, columns, data);
 	}
 	
@@ -359,11 +359,11 @@ public class SqlManager {
 	// 根據日期範圍查詢進口數據
 	public String[][] getImportByDate(String startDate, String endDate) {
 		String query = String.format(
-			"SELECT i.shopID, im.importDate, it.itemName, im.importAmount, (it.importPrice * im.importAmount) AS totalCost " +
+			"SELECT it.shopID, im.importDate, it.itemName, im.importAmount, (it.importPrice * im.importAmount) AS totalCost " +
 			"FROM import im " +
 			"LEFT JOIN item it ON im.itemID = it.itemID " +
-			"WHERE im.shopID = '%s' AND im.importDate BETWEEN '%s' AND '%s'", 
-			SqlManager.shopID, startDate, endDate
+			"WHERE im.shopID = %d AND im.importDate BETWEEN '%s' AND '%s'", 
+			Integer.parseInt(SqlManager.shopID), startDate, endDate
 		);
 		return executeQuery(query);
 	}

@@ -44,6 +44,7 @@ public class CheckReportController extends SqlManager{
 
         for(int i=0 ; i < str.length ; i++){
             Inventory e = new Inventory(getItemIDByName(str[i][2]), str[i][1], str[i][2], str[i][3], str[i][4]);    //id, date, name, amount, totalCost
+            System.out.println("index:"+getItemIDByName(str[i][2])+"\ndate:"+str[i][1]+"\nname:"+str[i][2]+"\nimport:"+str[i][3]+"\ncost:"+str[i][4]);
             imports.add(e);
         }
 
