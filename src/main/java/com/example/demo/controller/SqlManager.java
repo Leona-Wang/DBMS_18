@@ -102,6 +102,7 @@ public class SqlManager {
 	*/
 
 	public void addBill(String billName, String occurDate, String cost) {
+		System.out.println(this.shopID);
 		// 在 bill 表格中插入帳單資訊
 		String billInsertQuery = "INSERT INTO bill (shopID) VALUES (?)";
 		jdbcTemplate.update(billInsertQuery, Integer.parseInt(SqlManager.shopID));
