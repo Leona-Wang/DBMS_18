@@ -40,12 +40,8 @@ public class CheckInventoryController extends SqlManager{
         /*html跟js不會改的話再跟我說，我去改 */
         List<Product> inventory = new ArrayList<>();
         String [][] invList = getInventory();
-        Product mouse=new Product("0","mouse","40");
-        Product cow=new Product("1","cow","20");
-        inventory.add(mouse);
-        inventory.add(cow);
         for (String[] productInfo : invList) {
-            inventory.add(new Product(productInfo[0], productInfo[1], productInfo[2]));
+            inventory.add(new Product(productInfo[1],getItemNameById(productInfo[1]), productInfo[2]));
         }
         return inventory;
     }
@@ -60,10 +56,13 @@ public class CheckInventoryController extends SqlManager{
 
         for (int i=0;i<productIndex.size();i++){
             String newProductIndex = productIndex.get(i).replace("[", "").replace("]", "");
+            
             String newProductName = productName.get(i).replace("[", "").replace("]", "");
             String newInventoryAmount = inventoryAmount.get(i).replace("[", "").replace("]", "");
+           
+            System.out.println("index:"+newProductIndex+"\nproductName:"+newInventoryAmount+"\ninventoryAmount:"+newInventoryAmount);
             updateInventory(newProductIndex, newInventoryAmount);
-            System.out.println("index:"+productIndex.get(i)+"\nproductName:"+productName.get(i)+"\ninventoryAmount:"+inventoryAmount.get(i));
+            
         }
 
         System.out.println("good");

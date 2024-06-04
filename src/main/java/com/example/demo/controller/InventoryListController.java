@@ -40,12 +40,9 @@ public class InventoryListController extends SqlManager{
         /*html跟js不會改的話再跟我說，我去改 */
         List<Product> inventory = new ArrayList<>();
         String [][] invList = getInventory();
-        Product mouse=new Product("0","mouse","40");
-        Product cow=new Product("1","cow","20");
-        inventory.add(mouse);
-        inventory.add(cow);
+       
         for (String[] productInfo : invList) {
-            inventory.add(new Product(productInfo[0], productInfo[1], productInfo[2]));
+            inventory.add(new Product(productInfo[1],getItemNameById(productInfo[1]) , productInfo[2]));
         }
         return inventory;
     }

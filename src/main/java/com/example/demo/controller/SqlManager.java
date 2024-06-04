@@ -53,7 +53,9 @@ public class SqlManager {
 
             if (standard.equals(password)) {
                 correct = true;
-                SqlManager.shopID = result[0][0];
+				String[][] id=search("`shopID`","shop",String.format("shopName = '%s'", shopName));
+                SqlManager.shopID = id[0][0];
+				System.out.println(shopID);
             }
         }
 
@@ -120,7 +122,8 @@ public class SqlManager {
 	public void addImport(String itemID, String importAmount, String importDate) {
 		String table = "import";
 		String columns = "shopID, itemID, importAmount, importDate";
-		String data = String.format("%s, %s, %d, '%s'", SqlManager.shopID, itemID, importAmount, importDate);
+		String data = String.format("%d, %d, %d, '%s'", Integer.parseInt(SqlManager.shopID), Integer.parseInt(itemID), Integer.parseInt(importAmount), importDate);
+		//String data = String.format("%s, %s, %d, '%s'", SqlManager.shopID, itemID, importAmount, importDate);
 		addData(table, columns, data);
 	}
 	
@@ -197,13 +200,30 @@ public class SqlManager {
 	public void addInventory(String itemID, String remainAmount) {
 		String table = "inventory";
 		String columns = "shopID, itemID, remainAmount";
-		String data = String.format("'%s', '%s', %d", SqlManager.shopID, itemID, Integer.parseInt(remainAmount));
-		addData(table, columns, data);
+		//search(String selectColumns, String table, String condition)
+		//String.format("shopID = '%s' AND itemID = '%s'", SqlManager.shopID, itemID)
+		//search("remainAmount", "inventory", String.format("shopID = '%s' AND itemID = '%s'", SqlManager.shopID, itemID))
+		String[][] unitPerBox=search("unitPerBox","item",String.format("shopID = %d AND itemID = %d",Integer.parseInt(SqlManager.shopID) , Integer.parseInt(itemID)));
+		String unitRemainAmount=(Integer.parseInt(remainAmount)*Integer.parseInt(unitPerBox[0][0]))+"";
+		if (getInventoryAmount(itemID)>0){
+			String amount=(getInventoryAmount(itemID)+Integer.parseInt(unitRemainAmount))+"";
+			System.out.println("Amount: "+amount);
+			updateInventory(itemID, amount);
+		}
+		else{
+			String data = String.format("%d, %d, %d", Integer.parseInt(SqlManager.shopID),Integer.parseInt(itemID), Integer.parseInt(unitRemainAmount));
+			System.out.println(data);
+			addData(table, columns, data);
+		}
+		
+
+		
 	}
 	
 	// 更新庫存
 	public void updateInventory(String itemID, String newAmount) {
-		String query = String.format("UPDATE inventory SET remainAmount = %d WHERE shopID = '%s' AND itemID = '%s'", Integer.parseInt(newAmount), SqlManager.shopID, itemID);
+		String query = String.format("UPDATE inventory SET remainAmount = %d WHERE shopID = %d AND itemID = %d", Integer.parseInt(newAmount), Integer.parseInt(SqlManager.shopID), Integer.parseInt(itemID));
+		System.out.println(query);
 		jdbcTemplate.update(query);
 	}
 	
@@ -229,8 +249,8 @@ public class SqlManager {
 		String query = String.format(
 			"SELECT itemName " +
 			"FROM item " +
-			"WHERE shopID = '%s' AND itemID = '%s'", 
-			SqlManager.shopID, itemID
+			"WHERE shopID = %d AND itemID = %d", 
+			Integer.parseInt(SqlManager.shopID), Integer.parseInt(itemID)
 		);
 		return convertToString(executeQuery(query));
 	}
@@ -362,7 +382,7 @@ public class SqlManager {
 
 
 	// 獲取所有商品名稱
-    public String[] getAllItemNames() {
+    public List<String> getAllItemNames() {
         String query = String.format("SELECT itemName FROM item WHERE shopID = '%s'", SqlManager.shopID);
         List<String> itemNames = new ArrayList<>();
 
@@ -373,7 +393,9 @@ public class SqlManager {
             return null; // We don't need to return anything from this lambda function
         });
 
-        return itemNames.toArray(new String[0]);
+		
+        return itemNames;
+		
     }
 	
 	 // 查詢所有商品
@@ -387,6 +409,8 @@ public class SqlManager {
         String query = "SELECT * FROM inventory";
         return executeQuery(query);
     }
+
+
 
 	// 刪除指定資料
 	public void delete(String table, String condition) {
@@ -402,7 +426,8 @@ public class SqlManager {
     // 添加資料到指定表格
     private void addData(String table, String columns, String data) {
         String query = String.format("INSERT INTO %s (%s) VALUES (%s);", table, columns, data);
-        jdbcTemplate.update(query);
+		System.out.println(query);
+		jdbcTemplate.update(query);
     }
 
     // 根據指定條件查詢資料

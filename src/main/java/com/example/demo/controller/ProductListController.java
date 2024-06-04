@@ -40,12 +40,9 @@ public class ProductListController extends SqlManager{
         /*html跟js不會改的話再跟我說，我去改 */
         List<Product> products = new ArrayList<>();
         String [][] itemList = getItems();
-        Product mouse=new Product("0","mouse","1000","10","150","5");
-        Product cow=new Product("0","cow","2000","20","200","10");
-        products.add(mouse);
-        products.add(cow);
+        
         for (String[] productInfo : itemList) {
-            products.add(new Product(productInfo[0], productInfo[1], productInfo[2], productInfo[3], productInfo[4], productInfo[5]));
+            products.add(new Product(productInfo[1], productInfo[2], productInfo[4], productInfo[3], productInfo[5], productInfo[6]));
         }
         return products;
     }
