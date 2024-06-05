@@ -36,6 +36,10 @@
                 height: 50px;
             }
 
+            .dateInput-col{
+                height: 30px;
+            }
+
         </style>
 
         <!-- Favicon-->
@@ -78,9 +82,9 @@
                 <label class="form-label inputfont">選擇日期</label>
                 <form id="selectDate">
                     <label>起始</label>
-                    <input type="date" class="form-control input-col" id="minSelectDate" name="minSelectDate">
+                    <input type="date" class="form-control dateInput-col" id="minSelectDate" name="minSelectDate">
                     <label>結束</label>
-                    <input type="date" class="form-control input-col" id="maxSelectDate" name="maxSelectDate">
+                    <input type="date" class="form-control dateInput-col" id="maxSelectDate" name="maxSelectDate">
                 </form>
                 <div class="p-4 px-lg-4">
                     <button class="whitebtn" onclick="submitSelectDate()">查詢</button>
