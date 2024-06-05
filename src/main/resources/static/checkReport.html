@@ -72,57 +72,63 @@
             </form>
             <button onclick="submitSelectDate()">查詢</button>
             <br>
-            <table id="importTable">
+            <table id="importTable" class="table">
                 <thead>進貨紀錄
                     <tr>
-                        <th>產品編號</th>
-                        <th>日期</th>
-                        <th>貨物名稱</th>
-                        <th>進貨數量(單位：箱)</th>
-                        <th>成本</th>
-                        <th>修改資料</th>
-                        <th>刪除資料</th>
+                        <th scope="col">產品編號</th>
+                        <th scope="col">日期</th>
+                        <th scope="col">貨物名稱</th>
+                        <th scope="col">進貨數量(單位：箱)</th>
+                        <th scope="col">成本</th>
+                        <th scope="col">修改資料</th>
+                        <th scope="col">刪除資料</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- 這裡將由JavaScript動態生成 -->
+                    <tr>
+                        <!-- 這裡將由JavaScript動態生成 -->
+                    </tr>
                 </tbody>
             </table>
             <div>總進貨成本：</div>
             <div id="importTotalCost"></div>
             <br>
-            <table id="exportTable">
+            <table id="exportTable" class="table">
                 <thead>銷貨紀錄
                     <tr>
-                        <th>產品編號</th>
-                        <th>日期</th>
-                        <th>貨物名稱</th>
-                        <th>銷貨數量(單位：瓶、包)</th>
-                        <th>銷售額</th>
-                        <th>修改資料</th>
-                        <th>刪除資料</th>
+                        <th scope="col">產品編號</th>
+                        <th scope="col">日期</th>
+                        <th scope="col">貨物名稱</th>
+                        <th scope="col">銷貨數量(單位：瓶、包)</th>
+                        <th scope="col">銷售額</th>
+                        <th scope="col">修改資料</th>
+                        <th scope="col">刪除資料</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
                     <!-- 這裡將由JavaScript動態生成 -->
+                    </tr>
                 </tbody>
             </table>
             <div>總銷售收益：</div>
             <div id="exportTotalRevenue"></div>
             <br>
-            <table id="expenseTable">
+            <table id="expenseTable" class="table">
                 <thead>費用紀錄
                     <tr>
-                        <th>編號</th>
-                        <th>日期</th>
-                        <th>費用名稱</th>
-                        <th>花費</th>
-                        <th>修改資料</th>
-                        <th>刪除資料</th>
+                        <th scope="col">編號</th>
+                        <th scope="col">日期</th>
+                        <th scope="col">費用名稱</th>
+                        <th scope="col">花費</th>
+                        <th scope="col">修改資料</th>
+                        <th scope="col">刪除資料</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- 這裡將由JavaScript動態生成 -->
+                    <tr>
+                        <!-- 這裡將由JavaScript動態生成 -->
+                    </tr>
                 </tbody>
             </table>
             總費用成本：
