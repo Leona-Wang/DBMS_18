@@ -44,6 +44,7 @@ public class ProductListController {
         Product cow=new Product("0","cow","2000","20","200","10");
         products.add(mouse);
         products.add(cow);
+        //products.add()
         return products;
     }
     
