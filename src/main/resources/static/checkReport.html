@@ -25,7 +25,7 @@
             }
 
             .labelfont{
-                font-size: 20px;
+                font-size: 15px;
             }
 
             .formfont{
@@ -81,12 +81,12 @@
             <div class="container px-lg-4">
                 <label class="form-label inputfont">選擇日期</label>
                 <form id="selectDate">
-                    <label>起始</label>
+                    <label class="form-label labelfont">起始</label>
                     <input type="date" class="form-control dateInput-col" id="minSelectDate" name="minSelectDate">
-                    <label>結束</label>
+                    <label class="form-label labelfont">結束</label>
                     <input type="date" class="form-control dateInput-col" id="maxSelectDate" name="maxSelectDate">
                 </form>
-                <div class="p-4 px-lg-4">
+                <div class="p-4 px-lg-3">
                     <button class="whitebtn" onclick="submitSelectDate()">查詢</button>
                 </div>
             </div>
