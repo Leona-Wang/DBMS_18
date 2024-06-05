@@ -24,6 +24,14 @@
                 font-size: 30px;
             }
 
+            .labelfont{
+                font-size: 20px;
+            }
+
+            .formfont{
+                font-size: 15px;
+            }
+
             .input-col{
                 height: 50px;
             }
@@ -85,13 +93,13 @@
                     <thead>
                         <label class="form-label inputfont">進貨紀錄</label>
                         <tr>
-                            <th scope="col">產品編號</th>
-                            <th scope="col">日期</th>
-                            <th scope="col">貨物名稱</th>
-                            <th scope="col">進貨數量(單位：箱)</th>
-                            <th scope="col">成本</th>
-                            <th scope="col" class="whitebtn">修改資料</th>
-                            <th scope="col" class="whitebtn">刪除資料</th>
+                            <th scope="col" class="formfont">產品編號</th>
+                            <th scope="col" class="formfont">日期</th>
+                            <th scope="col" class="formfont">貨物名稱</th>
+                            <th scope="col" class="formfont">進貨數量(單位：箱)</th>
+                            <th scope="col" class="formfont">成本</th>
+                            <th scope="col" class="whitebtn formfont">修改資料</th>
+                            <th scope="col" class="whitebtn formfont">刪除資料</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -100,7 +108,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <label class="form-label inputfont">總進貨成本：<label id="importTotalCost"></label></label>
+                <label class="form-label labelfont">總進貨成本：<label id="importTotalCost"></label></label>
             </div>
             <br>
 
@@ -109,13 +117,13 @@
                     <thead>
                         <label class="form-label inputfont">銷貨紀錄</label>
                         <tr>
-                            <th scope="col">產品編號</th>
-                            <th scope="col">日期</th>
-                            <th scope="col">貨物名稱</th>
-                            <th scope="col">銷貨數量(單位：瓶、包)</th>
-                            <th scope="col">銷售額</th>
-                            <th scope="col" class="whitebtn">修改資料</th>
-                            <th scope="col" class="whitebtn">刪除資料</th>
+                            <th scope="col" class="formfont">產品編號</th>
+                            <th scope="col" class="formfont">日期</th>
+                            <th scope="col" class="formfont">貨物名稱</th>
+                            <th scope="col" class="formfont">銷貨數量(單位：瓶、包)</th>
+                            <th scope="col" class="formfont">銷售額</th>
+                            <th scope="col" class="whitebtn formfont">修改資料</th>
+                            <th scope="col" class="whitebtn formfont">刪除資料</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -124,7 +132,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <label class="form-label inputfont">總銷售收益：<label id="exportTotalRevenue"></label></label>        
+                <label class="form-label labelfont">總銷售收益：<label id="exportTotalRevenue"></label></label>        
             </div>
             <br>
 
@@ -133,12 +141,12 @@
                     <thead>
                         <label class="form-label inputfont">費用紀錄</label>
                         <tr>
-                            <th scope="col">編號</th>
-                            <th scope="col">日期</th>
-                            <th scope="col">費用名稱</th>
-                            <th scope="col">花費</th>
-                            <th scope="col" class="whitebtn">修改資料</th>
-                            <th scope="col" class="whitebtn">刪除資料</th>
+                            <th scope="col" class="formfont">編號</th>
+                            <th scope="col" class="formfont">日期</th>
+                            <th scope="col" class="formfont">費用名稱</th>
+                            <th scope="col" class="formfont">花費</th>
+                            <th scope="col" class="whitebtn formfont">修改資料</th>
+                            <th scope="col" class="whitebtn formfont">刪除資料</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -147,11 +155,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <label class="form-label inputfont">總費用成本：<label id="expenseTotalCost"></label></label>
+                <label class="form-label labelfont">總費用成本：<label id="expenseTotalCost"></label></label>
                 <br>
-                <label class="form-label inputfont">本時間段淨利：<label id="totalRevenue"></label></label>
+                <label class="form-label labelfont">本時間段淨利：<label id="totalRevenue"></label></label>
             </div>
-            
         </section>
 
         <!-- Footer-->
