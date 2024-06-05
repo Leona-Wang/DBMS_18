@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CheckInventoryController {
+public class CheckInventoryController extends SqlManager{
     
     @GetMapping(value = "/checkInventory", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
@@ -39,11 +40,10 @@ public class CheckInventoryController {
         /*可以的話全部的值都用String塞，這樣回傳比較不會出問題 */
         /*html跟js不會改的話再跟我說，我去改 */
         List<Product> inventory = new ArrayList<>();
-
-        Product mouse=new Product("0","mouse","40");
-        Product cow=new Product("1","cow","20");
-        inventory.add(mouse);
-        inventory.add(cow);
+        String [][] invList = getInventory();
+        for (String[] productInfo : invList) {
+            inventory.add(new Product(productInfo[1],getItemNameById(productInfo[1]), productInfo[2]));
+        }
         return inventory;
     }
     
@@ -56,7 +56,21 @@ public class CheckInventoryController {
         /*把這裡取到的資料丟進去DB費用表*/
 
         for (int i=0;i<productIndex.size();i++){
-            System.out.println("index:"+productIndex.get(i)+"\nproductName:"+productName.get(i)+"\ninventoryAmount:"+inventoryAmount.get(i));
+            
+            String newProductIndex = productIndex.get(i).replace("[", "").replace("]", "");
+            
+            String newProductName = productName.get(i).replace("[", "").replace("]", "");
+            String newInventoryAmount = inventoryAmount.get(i).replace("[", "").replace("]", "");
+            
+            int prevAmount=getInventoryAmount(newProductIndex);
+            int sellAmount=prevAmount-Integer.parseInt(newInventoryAmount);
+            System.out.println("index:"+newProductIndex+"\nproductName:"+newInventoryAmount+"\ninventoryAmount:"+newInventoryAmount);
+            updateInventory(newProductIndex, newInventoryAmount);
+
+            if (sellAmount!=0){
+                addExport(newProductIndex, sellAmount+"", LocalDate.now().toString());
+            }
+            
         }
 
         System.out.println("good");

@@ -23,11 +23,11 @@ public class ReportController {
     
     User user=new User();
     
-    /*@GetMapping(value = "/report", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(value = "/report", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
         ClassPathResource resource = new ClassPathResource("static/report.html");
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
-    }*/
+    }
 
     
 }

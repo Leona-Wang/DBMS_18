@@ -36,8 +36,8 @@ public class AddInventoryController extends SqlManager{
     @RequestParam("importBoxNum[]") List<String> importBoxNum) {
         
         /*把這裡取到的資料丟進去DB費用表*/
-        addInventory(importName.get(0).getItemIDByName, importBoxNum.get(0));
-        addImport(importName.get(0),importBoxNum.get(0),LocalDate.now().toString());
+        addInventory(getItemIDByName(importName.get(0)), importBoxNum.get(0));
+        addImport(getItemIDByName(importName.get(0)),importBoxNum.get(0),LocalDate.now().toString());
         System.out.println("importName: " + importName + 
         "\nimportBoxNum: " +importBoxNum);
 
@@ -52,13 +52,20 @@ public class AddInventoryController extends SqlManager{
         /*把商品清單項目名稱拉出來，當成新增銷售存貨的選擇項目 */
         
         
-        String[] ain = getAllItemNames();
-        return Arrays.asList(Arrays.toString(ain));
+        List<String> ain = getAllItemNames();
+        /*StringBuilder output = new StringBuilder();
+
+        for (int i = 0; i < ain.length; i++) {
+            output.append("\"").append(ain[i]).append("\"");
+            if (i < ain.length - 1) {
+                output.append(",");
+            }
+        }*/
+        
+        //String result = String.join(", ", ain);
+        //return Arrays.asList(result);
+        return ain;
     }
     
 }
-
-
-
-
-
+    

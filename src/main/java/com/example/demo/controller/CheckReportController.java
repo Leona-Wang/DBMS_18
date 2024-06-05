@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CheckReportController {
+public class CheckReportController extends SqlManager{
     
     public static String[] dates=new String[2]; 
 
@@ -37,13 +37,17 @@ public class CheckReportController {
     public List<Inventory> showImportTable() {
         //查query的時候，日期從dates[]拿，dates[0]是起始點，dates[1]是終點
         //查完之後新建物件，把資料塞到inventory裡，可以用資料比數跑for迴圈之類的
+        String[][] str = getImportByDate(dates[0], dates[1]);
+
         
         List<Inventory> imports = new ArrayList<>();
 
-        Inventory e1=new Inventory("0","2024-01-01","mouse","5","5000");
-        Inventory e2=new Inventory("1","2024-01-02","cow","5","10000");
-        imports.add(e1);
-        imports.add(e2);
+        for(int i=0 ; i < str.length ; i++){
+            Inventory e = new Inventory(getItemIDByName(str[i][2]), str[i][1], str[i][2], str[i][3], str[i][4]);    //id, date, name, amount, totalCost
+            System.out.println("index:"+getItemIDByName(str[i][2])+"\ndate:"+str[i][1]+"\nname:"+str[i][2]+"\nimport:"+str[i][3]+"\ncost:"+str[i][4]);
+            imports.add(e);
+        }
+
         return imports;
     }
 
@@ -53,11 +57,13 @@ public class CheckReportController {
         //查query的時候，日期從dates[]拿，dates[0]是起始點，dates[1]是終點
         //查完之後新建物件，把資料塞到inventory裡，可以用資料比數跑for迴圈之類的
         List<Inventory> exports = new ArrayList<>();
+        String[][] str = getExportByDate(dates[0], dates[1]);
 
-        Inventory e1=new Inventory("0","2024-03-15","mouse","3","120");
-        Inventory e2=new Inventory("1","2024-03-25","cow","2","400");
-        exports.add(e1);
-        exports.add(e2);
+        for(int i=0 ; i < str.length ; i++){
+            Inventory e = new Inventory(getItemIDByName(str[i][2]), str[i][1], str[i][2], str[i][3], str[i][4]);    //id, date, name, amount, totalRevenue
+            exports.add(e);
+        }
+
         return exports;
     }
     
@@ -67,11 +73,13 @@ public class CheckReportController {
         //查query的時候，日期從dates[]拿，dates[0]是起始點，dates[1]是終點
         //查完之後新建物件，把資料塞到otherExpense裡，可以用資料比數跑for迴圈之類的
         List<OtherExpense> expenses = new ArrayList<>();
+        String[][] str = getBillsBetweenDates(dates[0], dates[1]);
 
-        OtherExpense e1=new OtherExpense("0","2024-01-01","e1","500");
-        OtherExpense e2=new OtherExpense("1","2024-01-02","e2","400");
-        expenses.add(e1);
-        expenses.add(e2);
+        for(int i=0 ; i < str.length ; i++){
+            OtherExpense e = new OtherExpense(str[i][1], str[i][3], str[i][2], str[i][4]);  //id, date, type, cost
+            expenses.add(e);
+        }
+
         return expenses;
     }
 
@@ -100,49 +108,77 @@ public class CheckReportController {
     @PostMapping("/getImportData")
     public void getImportData(@RequestBody RowData rowData) {
         // 处理接收到的数据
+        String id = rowData.getColumn1();
+        int amount = Integer.parseInt(rowData.getColumn4());
+
         System.out.println("Received data: " + rowData.toString());
         System.out.println("good");
+
         // 进行后续操作
+        updateImportAmount(id, amount);
+
     }
 
     @PostMapping("/deleteImportData")
     public void deleteImportData(@RequestBody RowData rowData) {
         // 处理接收到的数据
+        String id = rowData.getColumn1();
+        String date = rowData.getColumn2();
+
         System.out.println("Received data: " + rowData.toString());
         System.out.println("good");
+        
         // 进行后续操作
+        deleteImportData(id, date);
     }
 
     @PostMapping("/getExportData")
     public void getExportData(@RequestBody RowData rowData) {
         // 处理接收到的数据
+        String id = rowData.getColumn1();
+        int amount = Integer.parseInt(rowData.getColumn4());
+
         System.out.println("Received data: " + rowData.toString());
         System.out.println("good");
+
         // 进行后续操作
+        updateExportAmount(id, amount);
     }
 
     @PostMapping("/deleteExportData")
     public void deleteExportData(@RequestBody RowData rowData) {
         // 处理接收到的数据
+        String id = rowData.getColumn1();
+        String date = rowData.getColumn2();
+
         System.out.println("Received data: " + rowData.toString());
         System.out.println("good");
         // 进行后续操作
+        deleteExportData(id, date);
     }
 
     @PostMapping("/getExpenseData")
     public void getExpenseData(@RequestBody ExpenseData expenseData) {
         // 处理接收到的数据
+        String id = expenseData.getColumn1();
+        String cost = expenseData.getColumn4();
+
         System.out.println("Received data: " + expenseData.toString());
         System.out.println("good");
         // 进行后续操作
+        updateBillInfoColumn(id, "cost", cost);
     }
 
     @PostMapping("/deleteExpenseData")
     public void deleteExpenseData(@RequestBody ExpenseData expenseData) {
         // 处理接收到的数据
+        String date = expenseData.getColumn1();
+
         System.out.println("Received data: " + expenseData.toString());
         System.out.println("good");
+
         // 进行后续操作
+        deleteExpenseData(date);
     }
 
 
@@ -230,11 +266,3 @@ public class CheckReportController {
         }
     }
 }
-
-
-
-
-
-
-
-

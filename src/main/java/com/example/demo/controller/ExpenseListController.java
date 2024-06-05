@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ExpenseListController {
+public class ExpenseListController extends SqlManager{
     
     @GetMapping(value = "/expenseList", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
@@ -39,16 +39,12 @@ public class ExpenseListController {
         /*可以的話全部的值都用String塞，這樣回傳比較不會出問題 */
         /*html跟js不會改的話再跟我說，我去改 */
         List<OtherExpense> expenses = new ArrayList<>();
-
-        OtherExpense e1=new OtherExpense("0","2024-01-01","e1","500");
-        OtherExpense e2=new OtherExpense("1","2024-01-02","e2","400");
-        expenses.add(e1);
-        expenses.add(e2);
+        String [][] billData = getBillData();
+        for(int i = 0 ; i<billData.length ; i++){
+            OtherExpense e = new OtherExpense(billData[i][1], billData[i][3], billData[i][2], billData[i][4]);  //id, date, type, cost
+            expenses.add(e);
+        }
         return expenses;
     }
     
 }
-
-
-
-
