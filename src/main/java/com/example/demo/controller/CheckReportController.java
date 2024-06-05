@@ -25,7 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CheckReportController extends SqlManager{
     
-    public static String[] dates=new String[2]; 
+    public static String[] dates=new String[2];
+    
 
     @GetMapping(value = "/checkReport", produces = MediaType.TEXT_HTML_VALUE)
     public String serveHomePage() throws IOException {
@@ -37,9 +38,14 @@ public class CheckReportController extends SqlManager{
     public List<Inventory> showImportTable() {
         //查query的時候，日期從dates[]拿，dates[0]是起始點，dates[1]是終點
         //查完之後新建物件，把資料塞到inventory裡，可以用資料比數跑for迴圈之類的
+
+        if (dates[0]==null|| dates[1]==null){
+            dates[0]="1999-01-01";
+            dates[1]="2024-07-31";
+        }
+        
         String[][] str = getImportByDate(dates[0], dates[1]);
 
-        
         List<Inventory> imports = new ArrayList<>();
 
         for(int i=0 ; i < str.length ; i++){
@@ -54,6 +60,10 @@ public class CheckReportController extends SqlManager{
     @GetMapping("/showExportTable")
     public List<Inventory> showExportTable() {
         
+        if (dates[0]==null|| dates[1]==null){
+            dates[0]="1999-01-01";
+            dates[1]="2024-07-31";
+        }
         //查query的時候，日期從dates[]拿，dates[0]是起始點，dates[1]是終點
         //查完之後新建物件，把資料塞到inventory裡，可以用資料比數跑for迴圈之類的
         List<Inventory> exports = new ArrayList<>();
@@ -69,7 +79,10 @@ public class CheckReportController extends SqlManager{
     
     @GetMapping("/showExpenseTable")
     public List<OtherExpense> showExpenseTable() {
-        
+        if (dates[0]==null|| dates[1]==null){
+            dates[0]="1999-01-01";
+            dates[1]="2024-07-31";
+        }
         //查query的時候，日期從dates[]拿，dates[0]是起始點，dates[1]是終點
         //查完之後新建物件，把資料塞到otherExpense裡，可以用資料比數跑for迴圈之類的
         List<OtherExpense> expenses = new ArrayList<>();

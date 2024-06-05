@@ -14,6 +14,15 @@ function submitForm() {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: data
-    }).then(response => response.text())
-    window.location.href = "http://localhost:8080/mainPage";
+    }).then(response => response.json())
+    .then(data => {
+        if (data.success === "true") {
+            alert(data.message);
+            window.location.href = "http://localhost:8080/";
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+    
 }

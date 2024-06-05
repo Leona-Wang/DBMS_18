@@ -2,9 +2,14 @@ package com.example.demo.controller;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.http.ResponseEntity;
 
+//import org.hibernate.mapping.Map;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StreamUtils;
@@ -31,7 +36,7 @@ public class RegisterController extends SqlManager{
 
     @PostMapping("/register")
     @ResponseBody
-    public String getRegister(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public ResponseEntity<Map<String, String>> getRegister(@RequestParam("username") String username, @RequestParam("password") String password) {
         
         /*這裡放判斷帳號有沒有重複辦過的method(帳號是primary key)，沒有重複申辦就放到DB裡*/
         /*username是申辦帳號，password是申辦密碼*/
@@ -40,10 +45,22 @@ public class RegisterController extends SqlManager{
         
         String userData = "註冊Username: " + username + ", Password: " + password;
        
-        enroll(username,password);
-        System.out.println(userData);
+        Map<String, String> response = new HashMap<>();
+        
+        if (enroll(username,password)) {
+            response.put("success", "true");
+            response.put("message", "註冊成功！");
+            
+        } else {
+            response.put("success", "false");
+            response.put("message", "店面名稱已存在，請選擇其他名稱。");
+        }
+        
+        return ResponseEntity.ok(response);
+        
+       
 
         
-        return "Received form data: " + userData;
+        
     }
 }

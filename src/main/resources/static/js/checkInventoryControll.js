@@ -12,14 +12,26 @@ document.addEventListener('DOMContentLoaded', function(){
                     input.max=product.inventoryAmount;
                     input.min=0;
                     input.value = product.inventoryAmount;
-                    input.onchange=function(){
+                    input.oninput = function() {
+                        
+                        let value = parseInt(input.value, 10);
+                    
+                        
+                        if (value > product.inventoryAmount) {
+                            input.value = product.inventoryAmount;
+                        }
+                        if (value < 0) {
+                            input.value = 0;
+                        }
+                    };
+                    /*input.onchange=function(){
                         if (input.value > product.inventoryAmount) {
                             input.value = product.inventoryAmount;
                         }
                         if (input.value < 0) {
                             input.value = 0;
                         }
-                    }
+                    }*/
                     input.name = 'inventoryAmount';
                     
                     let row = tableBody.insertRow();
