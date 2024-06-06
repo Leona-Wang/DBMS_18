@@ -69,7 +69,7 @@ function submitCheckInventoryForm() {
     })
     .then(response => response.text())
     .then(data => {
-        alert("已成功新增銷貨至存貨清單！");
+        alert("已成功完成盤點！");
         window.location.href = "http://localhost:8080/checkInventory";
     })
     .catch(error => {

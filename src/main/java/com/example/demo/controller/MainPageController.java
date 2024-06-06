@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
@@ -45,4 +46,21 @@ public class MainPageController {
         
     } 
     
+    @GetMapping("/random-sentence")
+    public String getRandomSentence() {
+
+        String[] sentences = {
+            "早安\n平安喜樂",
+            "早晨好，如意自在。\n舒心愉快，福慧齊來。",
+            "幸福，珍惜眼前所有。\n早安，享受美好當下。",
+            "心有所念，苦有回甘。\n願有年年，有錢有顏。",
+            "健康是最大的財富，保重身體~\n早睡早起，養成良好的生活習慣~~",
+            "早安\n一聲早，再聲好\n開心如意樣樣好。"
+        };
+
+        Random random = new Random();
+        int index = random.nextInt(sentences.length);
+        return sentences[index];
+    }
+
 }

@@ -171,7 +171,7 @@ function submitSelectDate(){
     })
     .then(response => response.text())
     .then(data => {
-        alert("已成功！");
+        alert("已成功選擇日期！");
         window.location.href = "http://localhost:8080/checkReport";
     })
     .catch(error => {
@@ -247,7 +247,7 @@ function sendImportData(row) {
         },
         body: JSON.stringify(rowData)
     }).then(response => {
-        alert("已成功新增存貨至存貨清單！");
+        alert("已成功更改至存貨清單！");
         window.location.href = "http://localhost:8080/checkReport";
     }).catch(error => {
         console.error('Error:', error);
@@ -273,7 +273,7 @@ function importDelete(button){
             },
             body: JSON.stringify(rowData)
         }).then(response => {
-            alert("已成功新增存貨至存貨清單！");
+            alert("已成功刪除！");
             window.location.href = "http://localhost:8080/checkReport";
         }).catch(error => {
             console.error('Error:', error);
@@ -349,7 +349,7 @@ function sendExportData(row) {
         },
         body: JSON.stringify(rowData)
     }).then(response => {
-        alert("已成功新增存貨至存貨清單！");
+        alert("已成功新增！");
         window.location.href = "http://localhost:8080/checkReport";
     }).catch(error => {
         console.error('Error:', error);
@@ -375,7 +375,7 @@ function exportDelete(button){
             },
             body: JSON.stringify(rowData)
         }).then(response => {
-            alert("已成功新增存貨至存貨清單！");
+            alert("已成功刪除！");
             window.location.href = "http://localhost:8080/checkReport";
         }).catch(error => {
             console.error('Error:', error);
@@ -450,7 +450,7 @@ function sendExpenseData(row) {
         },
         body: JSON.stringify(rowData)
     }).then(response => {
-        alert("已成功新增存貨至存貨清單！");
+        alert("已成功更改！");
         window.location.href = "http://localhost:8080/checkReport";
     }).catch(error => {
         console.error('Error:', error);
@@ -475,7 +475,7 @@ function expenseDelete(button){
             },
             body: JSON.stringify(rowData)
         }).then(response => {
-            alert("已成功新增存貨至存貨清單！");
+            alert("已成功刪除！");
             window.location.href = "http://localhost:8080/checkReport";
         }).catch(error => {
             console.error('Error:', error);

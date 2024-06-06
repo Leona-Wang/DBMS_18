@@ -9,7 +9,7 @@ function submitAddExpenseForm() {
     })
     .then(response => response.text())
     .then(data => {
-        alert("已成功新增銷貨至存貨清單！");
+        alert("已成功新增費用至費用清單！");
         window.location.href = "http://localhost:8080/addExpense";
     })
     .catch(error => {

@@ -9,7 +9,7 @@ function submitAddProductForm() {
     })
     .then(response => response.text())
     .then(data => {
-        alert("已成功新增銷貨至存貨清單！");
+        alert("已成功新增貨物種類至產品清單！");
         window.location.href = "http://localhost:8080/addProduct";
     })
     .catch(error => {
